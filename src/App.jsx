@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Dashboard from './pages/Dashboard'
 import UserManagement from './pages/UserManagement'
 import ListingManagement from './pages/ListingManagement'
+import Tracking from './pages/Tracking'
 import Sidebar from './components/common/Sidebar'
 import './App.css'
 import './styles/design-system.css'
@@ -17,6 +18,8 @@ function App() {
         return <UserManagement />
       case 'listing-management':
         return <ListingManagement />
+      case 'tracking':
+        return <Tracking />
       case 'events':
         return (
           <div className="flex-1 overflow-y-auto">

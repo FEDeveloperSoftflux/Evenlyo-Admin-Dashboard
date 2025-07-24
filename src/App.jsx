@@ -1,34 +1,78 @@
 import { useState } from 'react'
-import reactLogo from '../public/assets/react.svg'
-import viteLogo from '../public/assets/vite.svg'
+import Dashboard from './pages/Dashboard'
+import UserManagement from './pages/UserManagement'
+import Sidebar from './components/common/Sidebar'
 import './App.css'
+import './styles/design-system.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState('dashboard')
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'dashboard':
+        return <Dashboard />
+      case 'user-management':
+        return <UserManagement />
+      case 'events':
+        return (
+          <div className="flex-1 overflow-y-auto">
+            <div className="container-7xl py-responsive">
+              <h1 className="text-responsive-h2 text-gray-900 mb-6">Events Management</h1>
+              <div className="card-mobile space-mobile-md">
+                <p className="text-gray-600">Events page coming soon...</p>
+              </div>
+            </div>
+          </div>
+        )
+      case 'users':
+        return (
+          <div className="flex-1 overflow-y-auto">
+            <div className="container-7xl py-responsive">
+              <h1 className="text-responsive-h2 text-gray-900 mb-6">Users Management</h1>
+              <div className="card-mobile space-mobile-md">
+                <p className="text-gray-600">Users page coming soon...</p>
+              </div>
+            </div>
+          </div>
+        )
+      case 'analytics':
+        return (
+          <div className="flex-1 overflow-y-auto">
+            <div className="container-7xl py-responsive">
+              <h1 className="text-responsive-h2 text-gray-900 mb-6">Analytics</h1>
+              <div className="card-mobile space-mobile-md">
+                <p className="text-gray-600">Analytics page coming soon...</p>
+              </div>
+            </div>
+          </div>
+        )
+      case 'settings':
+        return (
+          <div className="flex-1 overflow-y-auto">
+            <div className="container-7xl py-responsive">
+              <h1 className="text-responsive-h2 text-gray-900 mb-6">Settings</h1>
+              <div className="card-mobile space-mobile-md">
+                <p className="text-gray-600">Settings page coming soon...</p>
+              </div>
+            </div>
+          </div>
+        )
+      default:
+        return <Dashboard />
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="h-screen bg-gray-50 flex overflow-hidden">
+      {/* Sidebar */}
+      <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      
+      {/* Main Content */}
+      <main className="flex-1 lg:ml-0 flex flex-col overflow-hidden">
+        {renderPage()}
+      </main>
+    </div>
   )
 }
 

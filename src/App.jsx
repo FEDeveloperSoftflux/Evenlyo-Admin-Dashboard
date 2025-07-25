@@ -4,6 +4,7 @@ import UserManagement from './pages/UserManagement'
 import ListingManagement from './pages/ListingManagement'
 import BookingAnalytics from './pages/BookingAnalytics'
 import Tracking from './pages/Tracking'
+import RoleManagement from './pages/RoleManagement'
 import Sidebar from './components/common/Sidebar'
 import './App.css'
 import './styles/design-system.css'
@@ -23,6 +24,8 @@ function App() {
         return <BookingAnalytics />
       case 'tracking':
         return <Tracking />
+      case 'role-management':
+        return <RoleManagement />
       case 'events':
         return (
           <div className="flex-1 overflow-y-auto">

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SellerDetailsModal = ({ isOpen, onClose, seller, position }) => {
+const SellerDetailsModal = ({ isOpen, onClose, seller, position, onTrackOrder, currentOrder }) => {
   if (!isOpen || !seller) return null;
 
   const modalStyle = {
@@ -89,8 +89,13 @@ const SellerDetailsModal = ({ isOpen, onClose, seller, position }) => {
         </div>
 
         <button
-          onClick={onClose}
-          className="w-full text-gray-900 bg-white py-2 px-4 rounded-2xl font-medium transition-colors border border-gray-200 "
+          onClick={() => {
+            if (currentOrder && onTrackOrder) {
+              onTrackOrder(currentOrder);
+            }
+            onClose();
+          }}
+          className="w-full text-gray-900 bg-white py-2 px-4 rounded-2xl font-medium transition-colors border border-gray-200 hover:bg-gray-50"
         >
           Track Now
         </button>

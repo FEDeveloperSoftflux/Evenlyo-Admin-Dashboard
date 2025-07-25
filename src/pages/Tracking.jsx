@@ -144,51 +144,60 @@ const Tracking = () => {
       statusColor: 'text-yellow-600 bg-yellow-50',
       statusLabel: 'Delivered',
       totalPrice: '$2,450.00',
-      progressNote: 'Order has been successfully delivered and payment confirmed. Customer feedback pending.',
+      progressNote: 'Order delivered to destination',
       timeline: [
-        {
-          title: 'Order Placed',
-          description: 'Order was successfully placed and payment received',
+          {
+          title: 'Request Sent',
+          description: 'Client sent order request',
           completed: true,
           icon: '/assets/Track.svg',
-          label: 'Confirmed',
-          labelColor: 'bg-green-100 text-green-600',
+          label: 'Client',
+          labelColor: 'bg-pink-100 text-pink-600',
           date: '2024-06-25 09:00 AM'
         },
         {
-          title: 'Vendor Confirmed',
-          description: 'Vendor accepted the order and started preparation',
+          title: 'Order Accepted',
+          description: 'Vendor accepted the order',
           completed: true,
           icon: '/assets/Track.svg',
-          label: 'Processing',
-          labelColor: 'bg-blue-100 text-blue-600',
+          label: 'Confirmed',
+          labelColor: 'bg-orange-100 text-orange-600',
+          date: '2024-06-25 09:00 AM'
+        },
+        {
+          title: 'Picked Up',
+          description: 'Order picked up from location',
+          completed: true,
+          icon: '/assets/Track.svg',
+          label: 'Driver',
+          labelColor: 'bg-green-100 text-green-600',
           date: '2024-06-25 10:30 AM'
         },
         {
-          title: 'Items Prepared',
-          description: 'All items have been prepared and quality checked',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Ready',
-          labelColor: 'bg-purple-100 text-purple-600',
-          date: '2024-06-26 02:00 PM'
-        },
-        {
-          title: 'Out for Delivery',
-          description: 'Items are on the way to destination',
+          title: 'Delivered',
+          description: 'Order delivered to destination',
           completed: true,
           icon: '/assets/Track.svg',
           label: 'In Transit',
-          labelColor: 'bg-orange-100 text-orange-600',
+          labelColor: 'bg-blue-100 text-blue-600',
           date: '2024-06-27 08:00 AM'
         },
         {
-          title: 'Delivered',
-          description: 'Order successfully delivered to customer',
+          title: 'Received',
+          description: 'Client confirmed receipt',
           completed: true,
           icon: '/assets/Track.svg',
           label: 'Completed',
-          labelColor: 'bg-green-100 text-green-600',
+          labelColor: 'bg-yellow-100 text-yellow-600',
+          date: '2024-06-27 10:30 AM'
+        },
+        {
+          title: 'Completed',
+          description: 'Client confirmed receipt',
+          completed: true,
+          icon: '/assets/Track.svg',
+          label: 'Completed',
+          labelColor: 'bg-yellow-100 text-yellow-600',
           date: '2024-06-27 10:30 AM'
         }
       ]
@@ -606,24 +615,26 @@ const Tracking = () => {
   };
 
   // Modal handlers
-  const handleBuyerClick = (buyer, event) => {
+  const handleBuyerClick = (buyer, order, event) => {
     const rect = event.currentTarget.getBoundingClientRect();
     setModalPosition({
       x: rect.left + rect.width / 2,
       y: rect.bottom + 10
     });
     setSelectedBuyer(buyer);
+    setSelectedOrder(order); // Store the current order for tracking
     setShowBuyerModal(true);
     setShowSellerModal(false); // Close seller modal if open
   };
 
-  const handleSellerClick = (seller, event) => {
+  const handleSellerClick = (seller, order, event) => {
     const rect = event.currentTarget.getBoundingClientRect();
     setModalPosition({
       x: rect.left + rect.width / 2,
       y: rect.bottom + 10
     });
     setSelectedSeller(seller);
+    setSelectedOrder(order); // Store the current order for tracking
     setShowSellerModal(true);
     setShowBuyerModal(false); // Close buyer modal if open
   };
@@ -754,7 +765,7 @@ const Tracking = () => {
                     disabled={selectedFilters.mainCategory === 'Main Category'}
                   >
                     {selectedFilters.mainCategory === 'Main Category' 
-                      ? 'Select Main Category First' 
+                      ? 'Select Main Category ' 
                       : selectedFilters.subCategory
                     }
                   </button>
@@ -942,7 +953,7 @@ const Tracking = () => {
                       Item List
                     </th>
                     <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Destination/Location
+                      Destination
                     </th>
                     <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
@@ -955,62 +966,71 @@ const Tracking = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {trackingData.map((order) => (
                     <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-black">
                         {order.trackingId}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-5 py-4 whitespace-nowrap text-sm font-semibold text-black">
                         <div>
                           <div>{order.dateTime}</div>
                           <div className="text-xs text-gray-400">{order.time}</div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-5 py-4 whitespace-nowrap">
                         <div 
-                          className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"
-                          onClick={(e) => handleBuyerClick(order.buyer, e)}
+                          className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-colors"
+                          onClick={(e) => handleBuyerClick(order.buyer, order, e)}
                         >
                           <img
                             src={order.buyer.avatar}
                             alt={order.buyer.name}
-                            className="w-8 h-8 rounded-full object-cover"
+                            className="w-7 h-7 rounded-full object-cover"
                           />
                           <div>
-                            <div className="text-sm font-medium text-gray-900">{order.buyer.name}</div>
+                            <div className="text-sm font-semibold text-black">{order.buyer.name}</div>
                             <div className="text-xs text-gray-400">Buyer</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-5 py-4 whitespace-nowrap">
                         <div 
-                          className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"
-                          onClick={(e) => handleSellerClick(order.seller, e)}
+                          className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-colors"
+                          onClick={(e) => handleSellerClick(order.seller, order, e)}
                         >
                           <img
                             src={order.seller.avatar}
                             alt={order.seller.name}
-                            className="w-8 h-8 rounded-full object-cover"
+                            className="w-7 h-7 rounded-full object-cover"
                           />
                           <div>
-                            <div className="text-sm font-medium text-gray-900">{order.seller.name}</div>
+                            <div className="text-sm font-semibold text-black">{order.seller.name}</div>
                             <div className="text-xs text-gray-400">Seller</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <div>
-                          <div>{order.itemList}</div>
-                          <div className="text-xs text-gray-400">10:30</div>
+                      <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <div className="space-y-1">
+                          {order.itemList.split(', ').map((item, index) => (
+                            <div key={index} className="truncate text-xs">
+                              {item}
+                            </div>
+                          ))}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500 max-w-xs">
-                        <div className="truncate">{order.destination}</div>
+                      <td className="px-5 py-4 text-sm text-black font-medium max-w-xs">
+                        <div className="space-y-1">
+                          {order.destination.split(', ').map((part, index) => (
+                            <div key={index} className="truncate text-xs">
+                              {part}
+                            </div>
+                          ))}
+                        </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-5 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${order.statusColor}`}>
                           {order.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <td className="px-5 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex items-center gap-2">
                           <button className="text-gray-400 hover:text-gray-600 transition-colors duration-200">
                             <img src="/assets/Download.svg" alt="Download" className="w-4 h-4" />
@@ -1038,6 +1058,8 @@ const Tracking = () => {
         onClose={closeBuyerModal}
         buyer={selectedBuyer}
         position={modalPosition}
+        onTrackOrder={handleViewOrderClick}
+        currentOrder={selectedOrder}
       />
       
       <SellerDetailsModal 
@@ -1045,6 +1067,8 @@ const Tracking = () => {
         onClose={closeSellerModal}
         seller={selectedSeller}
         position={modalPosition}
+        onTrackOrder={handleViewOrderClick}
+        currentOrder={selectedOrder}
       />
 
       <TrackOrderModal 

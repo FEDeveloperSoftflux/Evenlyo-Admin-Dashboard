@@ -77,7 +77,7 @@ const TrackOrderModal = ({ open, onClose, order, onDownload }) => {
         </div>
         
         <button
-          className="w-full py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold text-lg shadow-lg flex items-center justify-center gap-2 hover:from-pink-600 hover:to-pink-700 transition-all"
+          className="w-full py-3 rounded-2xl bg-gradient-brand text-white font-bold text-lg shadow-lg flex items-center justify-center gap-2 hover:from-pink-600 hover:to-pink-700 transition-all"
           onClick={onDownload}
         >
           <img src="/assets/Download.svg" alt="Download" className="w-5 h-5" />

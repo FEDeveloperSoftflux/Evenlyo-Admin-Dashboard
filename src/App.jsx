@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Dashboard from './pages/Dashboard'
 import UserManagement from './pages/UserManagement'
 import ListingManagement from './pages/ListingManagement'
+import BookingAnalytics from './pages/BookingAnalytics'
 import Tracking from './pages/Tracking'
 import Sidebar from './components/common/Sidebar'
 import './App.css'
@@ -18,6 +19,8 @@ function App() {
         return <UserManagement />
       case 'listing-management':
         return <ListingManagement />
+      case 'booking-analytics':
+        return <BookingAnalytics />
       case 'tracking':
         return <Tracking />
       case 'events':

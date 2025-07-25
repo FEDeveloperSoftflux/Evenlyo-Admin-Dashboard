@@ -36,7 +36,7 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
     },
     {
       id: 'payment-plans',
-      name: 'Payment Plans',
+      name: 'Fee & Plans',
       icon: '/assets/Plans.svg'
     },
     {

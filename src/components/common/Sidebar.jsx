@@ -49,6 +49,11 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
       id: 'blog-management',
       name: 'Blog Management',
       icon: '/assets/Blog.svg'
+    },
+    {
+      id: 'notifications',
+      name: 'Notifications',
+      icon: '/assets/Bell.svg'
     }
   ];
 

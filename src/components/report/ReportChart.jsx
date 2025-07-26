@@ -42,8 +42,8 @@ const ReportChart = () => {
             data={chartData}
             margin={{
               top: 5,
-              right: 30,
-              left: 20,
+              right: 5,
+              left: 5,
               bottom: 5,
             }}
           >

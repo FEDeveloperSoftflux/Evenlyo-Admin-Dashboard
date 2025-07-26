@@ -908,44 +908,26 @@ const Tracking = () => {
             </div>
        
 
-          {/* Tracking Table */}
-          <div className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
+          {/* Tracking Table - Desktop Only */}
+          <div className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden hidden lg:block">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-pink-100 border-b border-gray-200 rounded-t-xl">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Tracking ID
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date & Time
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Buyer Info
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Seller Info
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Item List
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Destination
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tracking ID</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buyer Info</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Seller Info</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item List</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Destination</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {trackingData.map((order) => (
                     <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-black">
-                        {order.trackingId}
-                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-black">{order.trackingId}</td>
                       <td className="px-5 py-4 whitespace-nowrap text-sm font-semibold text-black">
                         <div>
                           <div>{order.dateTime}</div>
@@ -953,15 +935,8 @@ const Tracking = () => {
                         </div>
                       </td>
                       <td className="px-5 py-4 whitespace-nowrap">
-                        <div 
-                          className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-colors"
-                          onClick={(e) => handleBuyerClick(order.buyer, order, e)}
-                        >
-                          <img
-                            src={order.buyer.avatar}
-                            alt={order.buyer.name}
-                            className="w-7 h-7 rounded-full object-cover"
-                          />
+                        <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-colors" onClick={(e) => handleBuyerClick(order.buyer, order, e)}>
+                          <img src={order.buyer.avatar} alt={order.buyer.name} className="w-7 h-7 rounded-full object-cover" />
                           <div>
                             <div className="text-sm font-semibold text-black">{order.buyer.name}</div>
                             <div className="text-xs text-gray-400">Buyer</div>
@@ -969,15 +944,8 @@ const Tracking = () => {
                         </div>
                       </td>
                       <td className="px-5 py-4 whitespace-nowrap">
-                        <div 
-                          className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-colors"
-                          onClick={(e) => handleSellerClick(order.seller, order, e)}
-                        >
-                          <img
-                            src={order.seller.avatar}
-                            alt={order.seller.name}
-                            className="w-7 h-7 rounded-full object-cover"
-                          />
+                        <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-colors" onClick={(e) => handleSellerClick(order.seller, order, e)}>
+                          <img src={order.seller.avatar} alt={order.seller.name} className="w-7 h-7 rounded-full object-cover" />
                           <div>
                             <div className="text-sm font-semibold text-black">{order.seller.name}</div>
                             <div className="text-xs text-gray-400">Seller</div>
@@ -987,35 +955,26 @@ const Tracking = () => {
                       <td className="px-5 py-4 whitespace-nowrap text-sm text-gray-500">
                         <div className="space-y-1">
                           {order.itemList.split(', ').map((item, index) => (
-                            <div key={index} className="truncate text-xs">
-                              {item}
-                            </div>
+                            <div key={index} className="truncate text-xs">{item}</div>
                           ))}
                         </div>
                       </td>
                       <td className="px-5 py-4 text-sm text-black font-medium max-w-xs">
                         <div className="space-y-1">
                           {order.destination.split(', ').map((part, index) => (
-                            <div key={index} className="truncate text-xs">
-                              {part}
-                            </div>
+                            <div key={index} className="truncate text-xs">{part}</div>
                           ))}
                         </div>
                       </td>
                       <td className="px-5 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${order.statusColor}`}>
-                          {order.status}
-                        </span>
+                        <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${order.statusColor}`}>{order.status}</span>
                       </td>
                       <td className="px-5 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex items-center gap-2">
                           <button className="text-gray-400 hover:text-gray-600 transition-colors duration-200">
                             <img src="/assets/Download.svg" alt="Download" className="w-4 h-4" />
                           </button>
-                          <button 
-                            className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                            onClick={() => handleViewOrderClick(order)}
-                          >
+                          <button className="text-gray-400 hover:text-gray-600 transition-colors duration-200" onClick={() => handleViewOrderClick(order)}>
                             <img src="/assets/View.svg" alt="View" className="w-4 h-4" />
                           </button>
                         </div>
@@ -1024,6 +983,70 @@ const Tracking = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          {/* Mobile Card View - Only visible on mobile */}
+          <div className="lg:hidden">
+            <div className="divide-y divide-gray-100">
+              {trackingData.map((order) => (
+                <div key={order.id} className="p-4 hover:bg-gray-50 transition-colors bg-white rounded-3xl shadow-sm mb-4">
+                  {/* Card Header: Tracking ID, Status, Date */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-black px-2 py-1 rounded-lg">{order.trackingId}</span>
+                      <span className={`text-xs font-medium rounded-full px-2 py-1 ml-2 ${order.statusColor}`}>{order.status}</span>
+                    </div>
+                    <div className="text-xs text-gray-400">{order.dateTime} {order.time}</div>
+                  </div>
+
+                  {/* Buyer & Seller Info - Seller aligned right */}
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2 cursor-pointer" onClick={(e) => handleBuyerClick(order.buyer, order, e)}>
+                      <img src={order.buyer.avatar} alt={order.buyer.name} className="w-7 h-7 rounded-full object-cover" />
+                      <div>
+                        <div className="text-xs font-semibold text-black">{order.buyer.name}</div>
+                        <div className="text-xs text-gray-400">Buyer</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 cursor-pointer justify-end" onClick={(e) => handleSellerClick(order.seller, order, e)}>
+                      <img src={order.seller.avatar} alt={order.seller.name} className="w-7 h-7 rounded-full object-cover" />
+                      <div className="text-right">
+                        <div className="text-xs font-semibold text-black">{order.seller.name}</div>
+                        <div className="text-xs text-gray-400">Seller</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Item List & Destination */}
+                  <div className="mb-5 mt-5">
+                    <div className="text-xs font-medium text-black uppercase mb-1">Items</div>
+                    <div className="flex flex-wrap gap-2">
+                      {order.itemList.split(', ').map((item, idx) => (
+                        <span key={idx} className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-md">{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mb-2">
+                    <div className="text-xs font-medium text-black uppercase mb-1">Destination</div>
+                    <div className="flex flex-wrap gap-2">
+                      {order.destination.split(', ').map((part, idx) => (
+                        <span key={idx} className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-md">{part}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-3 mt-2 justify-end">
+                    <button className="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                      <img src="/assets/Download.svg" alt="Download" className="w-4 h-4" />
+                    </button>
+                    <button className="text-gray-400 hover:text-gray-600 transition-colors duration-200" onClick={() => handleViewOrderClick(order)}>
+                      <img src="/assets/View.svg" alt="View" className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </main>

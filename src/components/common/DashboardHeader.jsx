@@ -1,21 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileDropdownRef = useRef(null);
+  const notificationDropdownRef = useRef(null);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const toggleNotificationDropdown = () => {
+    setIsNotificationOpen((prev) => !prev);
+    setIsProfileOpen(false);
   };
 
-  // Close dropdown when clicking outside
+  const toggleProfileDropdown = () => {
+    setIsProfileOpen((prev) => !prev);
+    setIsNotificationOpen(false);
+  };
+
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target) &&
+        notificationDropdownRef.current &&
+        !notificationDropdownRef.current.contains(event.target)
+      ) {
+        setIsProfileOpen(false);
+        setIsNotificationOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -39,14 +52,41 @@ const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
           {/* User Profile */}
           <div className="flex items-center space-x-1">
             {/* Notifications */}
-            <button className="touch-target relative">
-              <img src="/assets/Bell.svg" alt="Notifications" className="w-7 h-7 text-gray-600 bg-gray-200 p-1 rounded-full" />
-            </button>
+            <div className="relative" ref={notificationDropdownRef}>
+              <button className="touch-target relative" onClick={toggleNotificationDropdown}>
+                <img src="/assets/Bell.svg" alt="Notifications" className="w-7 h-7 text-gray-600 bg-gray-200 p-1 rounded-full" />
+              </button>
+              {isNotificationOpen && (
+                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  <div className="py-2 px-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-semibold text-lg text-gray-900">Notifications</span>
+                      <button
+                        className="text-pink-600 text-sm font-medium hover:underline"
+                        onClick={() => {
+                          if (typeof window.setCurrentPage === 'function') {
+                            window.setCurrentPage('notifications');
+                          } else {
+                            window.location.reload();
+                          }
+                        }}
+                      >
+                        See All
+                      </button>
+                    </div>
+                    {/* Example notifications list */}
+                    <ul className="divide-y divide-gray-100 max-h-60 overflow-y-auto">
+                      <li className="py-2 text-gray-700">No new notifications.</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* User Avatar with Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            <div className="relative" ref={profileDropdownRef}>
               <button 
-                onClick={toggleDropdown}
+                onClick={toggleProfileDropdown}
                 className="flex items-center space-x-2 hover:bg-gray-50 rounded-lg p-2 transition-colors"
               >
                 <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center overflow-hidden">
@@ -62,7 +102,7 @@ const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
               </button>
 
               {/* Dropdown Menu */}
-              {isDropdownOpen && (
+              {isProfileOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                   <div className="py-2">
                     {/* Profile Header */}
@@ -92,12 +132,6 @@ const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         Account Settings
-                      </a>
-                      <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                        <svg className="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Help & Support
                       </a>
                     </div>
 

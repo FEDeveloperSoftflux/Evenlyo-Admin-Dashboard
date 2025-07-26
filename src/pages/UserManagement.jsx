@@ -232,7 +232,7 @@ const UserManagement = () => {
                       <div className="px-4 py-3">
                         <button
                           onClick={clearAllFilters}
-                          className="w-full px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors text-sm font-medium"
+                          className="w-full px-4 py-2 bg-gradient-brand text-white rounded-lg hover:bg-pink-600 transition-colors text-sm font-medium"
                         >
                           Clear All Filters
                         </button>

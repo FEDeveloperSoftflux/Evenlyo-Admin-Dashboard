@@ -2,12 +2,29 @@ import React from 'react';
 import { BarChart, Bar, ResponsiveContainer, Cell, XAxis, YAxis, Tooltip } from 'recharts';
 
 const ListingCharts = () => {
+  // Responsive margin for BarChart
+  const [leftMargin, setLeftMargin] = React.useState(10);
+  const [xAxisKey, setXAxisKey] = React.useState('name');
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 640) {
+        setLeftMargin(0);
+        setXAxisKey('shortName');
+      } else {
+        setLeftMargin(10);
+        setXAxisKey('name');
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const chartData = [
-    { name: 'Food & Drinks', shortName: 'Food &\nDrinks', value: 400, color: 'url(#gradient)' },
-    { name: 'Decoration & Styling', shortName: 'Decoration\n& Styling', value: 1400, color: 'url(#gradient)' },
-    { name: 'Locations & Party Tents', shortName: 'Locations &\nParty Tents', value: 1100, color: 'url(#gradient)' },
-    { name: 'Decoration & Styling', shortName: 'Decoration\n& Styling', value: 1600, color: 'url(#gradient)' },
-    { name: 'Staff & Services', shortName: 'Staff &\nServices', value: 550, color: 'url(#gradient)' },
+    { name: 'Food & Drinks', shortName: 'Food', value: 400, color: 'url(#gradient)' },
+    { name: 'Decoration & Styling', shortName: 'Decor', value: 1400, color: 'url(#gradient)' },
+    { name: 'Locations & Party Tents', shortName: 'Location', value: 1100, color: 'url(#gradient)' },
+    { name: 'Decoration & Styling', shortName: 'Decor', value: 1600, color: 'url(#gradient)' },
+    { name: 'Staff & Services', shortName: 'Staff', value: 550, color: 'url(#gradient)' },
   ];
 
   // Custom X-axis tick component to handle multiline text
@@ -49,7 +66,7 @@ const ListingCharts = () => {
             margin={{
               top: 10,
               right: 20,
-              left: 40,
+              left: leftMargin,
               bottom: 40,
             }}
             barCategoryGap="10%"
@@ -62,7 +79,7 @@ const ListingCharts = () => {
             </linearGradient>
             </defs>
             <XAxis 
-              dataKey="shortName"
+              dataKey={xAxisKey}
               axisLine={false}
               tickLine={false}
               tick={<CustomXAxisTick />}

@@ -356,7 +356,30 @@ const UserTable = ({ userType = 'clients', selectedPlan = 'All Plans', filters =
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="overflow-x-auto">
+      {/* Mobile Select All Header - Only visible on mobile */}
+      <div className="lg:hidden bg-pink-100 px-4 py-3 border-b border-gray-100">
+        <div className="flex items-center gap-3">
+          <div
+            className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer ${selectedUsers.length === currentUsers.length && currentUsers.length > 0 ? 'bg-gradient-brand border-pink-600' : 'border-gray-300 bg-white'}`}
+            onClick={handleSelectAll}
+            role="checkbox"
+            aria-checked={selectedUsers.length === currentUsers.length && currentUsers.length > 0}
+            tabIndex={0}
+          >
+            {selectedUsers.length === currentUsers.length && currentUsers.length > 0 && (
+              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            )}
+          </div>
+          <span className="text-sm font-medium text-gray-700">
+            Select All ({selectedUsers.length} selected)
+          </span>
+        </div>
+      </div>
+
+      {/* Desktop Table View - Hidden on mobile */}
+      <div className="hidden lg:block overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
@@ -518,13 +541,151 @@ const UserTable = ({ userType = 'clients', selectedPlan = 'All Plans', filters =
         </table>
       </div>
 
+      {/* Mobile Card View - Only visible on mobile */}
+      <div className="lg:hidden">
+        <div className="divide-y divide-gray-100">
+          {currentUsers.map((user) => (
+            <div key={user.sn} className="p-4 hover:bg-gray-50 transition-colors">
+              {/* Card Header with Avatar, Name and Selection */}
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer ${selectedUsers.includes(user.sn) ? 'bg-gradient-brand border-pink-600' : 'border-gray-300 bg-white'}`}
+                    onClick={() => handleSelectUser(user.sn)}
+                    role="checkbox"
+                    aria-checked={selectedUsers.includes(user.sn)}
+                    tabIndex={0}
+                  >
+                    {selectedUsers.includes(user.sn) && (
+                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
+                    className="h-12 w-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <div className="text-base font-semibold text-gray-900">{user.name}</div>
+                    <div className="text-sm text-gray-500">S# {user.sn}</div>
+                  </div>
+                </div>
+                
+                {/* Actions Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => toggleDropdown(user.sn)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <svg className="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                    </svg>
+                  </button>
+                  
+                  {openDropdown === user.sn && (
+                    <div 
+                      ref={dropdownRef}
+                      className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-2 fade-in-mobile"
+                    >
+                      <button
+                        onClick={() => handleAction('block', user.sn)}
+                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                      >
+                        {user.status === 'Blocked' ? 'Unblock' : 'Block'}
+                      </button>
+                      {userType !== 'clients' && (
+                        <button
+                          onClick={() => handleAction('open', user.sn)}
+                          className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                        >
+                          Open Profile
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleAction('sendEmail', user.sn)}
+                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                      >
+                        Send Email
+                      </button>
+                      <button
+                        onClick={() => handleAction('changePassword', user.sn)}
+                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors whitespace-nowrap"
+                      >
+                        View/ change password
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Card Content - User Details */}
+              <div className="space-y-2">
+                {/* ID and Join Date */}
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-xs font-medium text-gray-500 uppercase">ID</span>
+                    <p className="text-sm font-medium text-gray-900">{user.id}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs font-medium text-gray-500 uppercase">Join Date</span>
+                    <p className="text-sm text-gray-900">{user.joinDate}</p>
+                  </div>
+                </div>
+
+                {/* Address */}
+                <div>
+                  <span className="text-xs font-medium text-gray-500 uppercase">Address</span>
+                  <p className="text-sm text-gray-900">{user.address}</p>
+                </div>
+
+                {/* Contact and Orders */}
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-xs font-medium text-gray-500 uppercase">Contact</span>
+                    <p className="text-sm text-gray-900">{user.contact}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs font-medium text-gray-500 uppercase">Orders</span>
+                    <p className="text-sm font-semibold text-gray-900">{user.orders}</p>
+                  </div>
+                </div>
+
+                {/* Subscription (for vendors) and Status */}
+                <div className="flex justify-between items-center">
+                  {userType === 'vendors' && (
+                    <div>
+                      <span className="text-xs font-medium text-gray-500 uppercase">Subscription</span>
+                      <div className="mt-1">
+                        <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${getSubscriptionColor(user.subscription)}`}>
+                          {user.subscription}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  <div className={userType === 'vendors' ? 'text-right' : ''}>
+                    <span className="text-xs font-medium text-gray-500 uppercase">Status</span>
+                    <div className="mt-1">
+                      <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${getStatusColor(user.status)}`}>
+                        {user.status}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Pagination */}
-      <div className="px-6 py-4 border-t border-gray-100 bg-gray-50">
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-700">
+      <div className="px-4 lg:px-6 py-4 border-t border-gray-100 bg-gray-50">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-sm text-gray-700 order-2 sm:order-1">
             Showing {startIndex + 1} to {Math.min(startIndex + usersPerPage, filteredUsers.length)} of {filteredUsers.length} {userType}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 order-1 sm:order-2">
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}

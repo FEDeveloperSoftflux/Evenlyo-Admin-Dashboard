@@ -253,25 +253,26 @@ const RoleManagement = () => {
             </button>
           </div>
 
-          {/* Table */}
+          {/* Table for Large Screens */}
           <section className="mb-responsive">
             <div className="card-mobile overflow-hidden">
-              <div className="overflow-x-auto">
+              {/* Desktop Table View */}
+              <div className="overflow-x-auto hidden lg:block">
                 {activeTab === 'designation' ? (
                   // Designations Table
                   <table className="w-full min-w-[800px]">
                     <thead className="bg-pink-100">
                       <tr>
-                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Date & Time
                         </th>
-                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Designation Name
                         </th>
-                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           All Access
                         </th>
-                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
@@ -279,41 +280,23 @@ const RoleManagement = () => {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {filteredDesignations.map((designation) => (
                         <tr key={designation.id} className="hover:bg-gray-50">
-                          <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-black font-medium">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-black font-medium">
                             <div className="flex items-center">
                               <div>
                                 <div>{designation.dateTime}</div>
                               </div>
                             </div>
                           </td>
-                          <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-xs sm:text-sm text-black font-medium">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-black font-medium">
                             <div className="flex items-center">
-                              <img src="/assets/jaydeep.png" alt="User" className="w-6 h-6 sm:w-8 sm:h-8 rounded-full mr-2" />
+                              <img src="/assets/jaydeep.png" alt="User" className="w-8 h-8 rounded-full mr-2" />
                               <div>
-                                <div className="truncate max-w-[120px] sm:max-w-none">{designation.designation}</div>
+                                <div>{designation.designation}</div>
                                 <div className="text-xs text-gray-500">B001</div>
                               </div>
                             </div>
-                            {/* Mobile: Show permissions below name */}
-                            <div className="mt-2 lg:hidden">
-                              <div className="flex flex-wrap gap-1">
-                                {designation.permissions.slice(0, 2).map((permission, index) => (
-                                  <span
-                                    key={index}
-                                    className="px-2 py-1 rounded-full text-xs font-medium text-green-500 bg-green-50"
-                                  >
-                                    {permission.name}: {permission.access}
-                                  </span>
-                                ))}
-                                {designation.permissions.length > 2 && (
-                                  <span className="px-2 py-1 rounded-full text-xs font-medium text-gray-500 bg-gray-50">
-                                    +{designation.permissions.length - 2} more
-                                  </span>
-                                )}
-                              </div>
-                            </div>
                           </td>
-                          <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm hidden lg:table-cell">
+                          <td className="px-6 py-4 text-sm">
                             <div className="flex flex-wrap gap-2">
                               {designation.permissions.map((permission, index) => (
                                 <span
@@ -326,21 +309,21 @@ const RoleManagement = () => {
                               ))}
                             </div>
                           </td>
-                          <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div className="flex items-center gap-1 sm:gap-2">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <div className="flex items-center gap-2">
                               <button
                                 onClick={() => handleEdit(designation.id)}
                                 className="text-blue-600 hover:text-blue-900 p-1"
                                 title="Edit"
                               >
-                                <img src="/assets/Edit.svg" alt="Edit" className="w-3 h-3 sm:w-4 sm:h-4" />
+                                <img src="/assets/Edit.svg" alt="Edit" className="w-4 h-4" />
                               </button>
                               <button
                                 onClick={() => handleDelete(designation.id)}
                                 className="text-red-600 hover:text-red-900 p-1"
                                 title="Delete"
                               >
-                                <img src="/assets/Delete.svg" alt="Delete" className="w-3 h-3 sm:w-4 sm:h-4" />
+                                <img src="/assets/Delete.svg" alt="Delete" className="w-4 h-4" />
                               </button>
                             </div>
                           </td>
@@ -475,14 +458,186 @@ const RoleManagement = () => {
                     </tbody>
                   </table>
                 )}
+              </div>
 
-                {((activeTab === 'designation' && filteredDesignations.length === 0) || 
-                  (activeTab === 'role' && filteredRoles.length === 0)) && (
-                  <div className="text-center py-8 text-gray-500">
-                    No {activeTab === 'designation' ? 'designations' : 'roles'} found matching your search.
+              {/* Mobile Card View */}
+              <div className="lg:hidden ">
+                {activeTab === 'designation' ? (
+                  // Designations Cards
+                  <div className="space-y-3 bg-gray-50 ">
+                    {filteredDesignations.map((designation) => (
+                      <div key={designation.id} className=" rounded-3xl border border-gray-200 p-4 shadow-sm bg-white">
+                        {/* Header with Date and Actions */}
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="text-sm text-gray-500">
+                            {designation.dateTime}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => handleEdit(designation.id)}
+                              className="text-blue-600 hover:text-blue-900 p-1"
+                              title="Edit"
+                            >
+                              <img src="/assets/Edit.svg" alt="Edit" className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(designation.id)}
+                              className="text-red-600 hover:text-red-900 p-1"
+                              title="Delete"
+                            >
+                              <img src="/assets/Delete.svg" alt="Delete" className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Designation Info */}
+                        <div className="flex items-center mb-3">
+                          <img src="/assets/jaydeep.png" alt="User" className="w-10 h-10 rounded-full mr-3" />
+                          <div>
+                            <div className="font-medium text-black">{designation.designation}</div>
+                            <div className="text-sm text-gray-500">B001</div>
+                          </div>
+                        </div>
+
+                        {/* Permissions */}
+                        <div className="mb-3">
+                          <div className="text-sm font-medium text-gray-700 mb-2">Permissions:</div>
+                          <div className="flex flex-wrap gap-2">
+                            {designation.permissions.map((permission, index) => (
+                              <span
+                                key={index}
+                                className="px-2 py-1 rounded-full text-xs font-medium text-green-500 bg-green-50"
+                              >
+                                {permission.name}: {permission.access}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Status */}
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-500">Status:</span>
+                          <span className="text-sm font-medium text-green-500">{designation.status}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  // Roles Cards
+                  <div className="space-y-4 bg-gray-50*">
+                    {filteredRoles.map((role) => (
+                      <div key={role.id} className=" rounded-3xl border border-gray-200 p-4 shadow-sm bg-white">
+                        {/* Header with Date and Actions */}
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="text-sm text-gray-500">
+                            <div>{role.dateTime}</div>
+                            <div className="text-xs text-black font-medium">10:30</div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => handleEdit(role.id)}
+                              className="text-blue-600 hover:text-blue-900 p-1"
+                              title="Edit"
+                            >
+                              <img src="/assets/Edit.svg" alt="Edit" className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(role.id)}
+                              className="text-red-600 hover:text-red-900 p-1"
+                              title="Delete"
+                            >
+                              <img src="/assets/Delete.svg" alt="Delete" className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* User Info */}
+                        <div className="flex items-center mb-4">
+                          <img src={role.avatar} alt="User" className="w-12 h-12 rounded-full mr-3" />
+                          <div className="flex-1">
+                            <div className="font-medium text-black">{role.name}</div>
+                            <div className="text-sm text-gray-500">{role.role}</div>
+                          </div>
+                        </div>
+
+                        {/* Contact Info */}
+                        <div className="mb-4">
+                          <div className="text-sm font-medium text-gray-700 mb-1">Contact:</div>
+                          <div className="text-sm text-black">{role.contact}</div>
+                          <div className="text-sm text-black">{role.phone}</div>
+                        </div>
+
+                        {/* Password */}
+                        <div className="mb-4">
+                          <div className="text-sm font-medium text-gray-700 mb-1">Password:</div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-black">
+                              {passwordVisibility[role.id] ? 'MyPassword123' : role.password}
+                            </span>
+                            <button
+                              onClick={() => togglePasswordVisibility(role.id)}
+                              className="text-gray-400 hover:text-gray-600 transition-colors"
+                              title={passwordVisibility[role.id] ? 'Hide password' : 'Show password'}
+                            >
+                              {passwordVisibility[role.id] ? (
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.464 8.464M9.878 9.878a3 3 0 104.243 4.243M14.121 14.121l1.414 1.414" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
+                                </svg>
+                              ) : (
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Department Permissions */}
+                        <div className="mb-4">
+                          <div className="text-sm font-medium text-gray-700 mb-2">Department:</div>
+                          <div className="flex flex-wrap gap-2">
+                            <span className="px-2 py-1 rounded-full text-xs font-medium text-green-500 bg-green-50">
+                              {role.department}: View
+                            </span>
+                            <span className="px-2 py-1 rounded-full text-xs font-medium text-green-500 bg-green-50">
+                              Settings: View Edit
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Status Toggle */}
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-gray-700">Status:</span>
+                          <div className="flex items-center space-x-3">
+                            <button 
+                              onClick={() => toggleRoleStatus(role.id)}
+                              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-all duration-300 ease-in-out ${getToggleColor(role.status === 'Active')}`}
+                            >
+                              <span className="sr-only">Toggle status</span>
+                              <span
+                                className={`inline-block h-4 w-4 transform rounded-full shadow-lg ring-0 transition-transform duration-300 ease-in-out ${role.status === 'Active' ? 'translate-x-6' : 'translate-x-1'} ${getToggleThumbColor(role.status === 'Active')}`}
+                              />
+                            </button>
+                            <span className={`text-sm font-medium ${getStatusTextColor(role.status === 'Active')}`}>
+                              {getToggleStatus(role.status === 'Active')}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
+
+              {/* Empty State */}
+              {((activeTab === 'designation' && filteredDesignations.length === 0) || 
+                (activeTab === 'role' && filteredRoles.length === 0)) && (
+                <div className="text-center py-8 text-gray-500">
+                  No {activeTab === 'designation' ? 'designations' : 'roles'} found matching your search.
+                </div>
+              )}
             </div>
           </section>
         </main>

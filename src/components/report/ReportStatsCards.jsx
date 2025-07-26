@@ -8,7 +8,7 @@ const ReportStatsCards = () => {
       change: '+12.5% from One Day',
       bgColor: 'bg-white',
       textColor: 'text-gray-900',
-      icon: '/assets/Plans.svg',
+      icon: '/assets/Earning.svg',
       changeColor: 'text-green-600'
     },
     {
@@ -17,7 +17,7 @@ const ReportStatsCards = () => {
       change: '-6.2% from last Week',
       bgColor: 'bg-gradient-brand',
       textColor: 'text-white',
-      icon: '/assets/Plans.svg',
+      icon: '/assets/WeekEarning.svg',
       changeColor: 'text-white/80'
     },
     {
@@ -26,7 +26,7 @@ const ReportStatsCards = () => {
       change: '+6.7% from last month',
       bgColor: 'bg-white',
       textColor: 'text-gray-900',
-      icon: '/assets/Plans.svg',
+      icon: '/assets/TrendUp.svg',
       changeColor: 'text-green-600'
     }
   ];

@@ -365,7 +365,7 @@ const ReportManagement = () => {
               />
               <button
                 onClick={() => setActiveTab('vendor')}
-                className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-base font-medium transition-all duration-300 ${
+                className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-xs sm:text-lg font-medium transition-all duration-300 ${
                   activeTab === 'vendor'
                     ? 'text-white'
                     : 'text-black font-bold hover:text-gray-900'
@@ -375,7 +375,7 @@ const ReportManagement = () => {
               </button>
               <button
                 onClick={() => setActiveTab('client')}
-                className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-base font-medium transition-all duration-300 ${
+                className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-xs sm:text-lg font-medium transition-all duration-300 ${
                   activeTab === 'client'
                     ? 'text-white'
                     : 'text-black font-bold hover:text-gray-900'

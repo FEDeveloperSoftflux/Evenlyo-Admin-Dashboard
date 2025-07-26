@@ -3,6 +3,13 @@ import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday
 import TrackOrderModal from '../tracking/TrackOrderModal';
 
 const BookingCalendar = ({ selectedDate, onDateChange, events, viewType }) => {
+  // Responsive week day names
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 640);
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 640);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const [hoveredEvent, setHoveredEvent] = useState(null);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
   const [hoverTimeout, setHoverTimeout] = useState(null);
@@ -255,7 +262,9 @@ const BookingCalendar = ({ selectedDate, onDateChange, events, viewType }) => {
     const calendarStart = startOfWeek(monthStart);
     const calendarEnd = endOfWeek(monthEnd);
     const days = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
-    const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const weekDays = isMobile
+      ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     return (
       <div className="p-4">

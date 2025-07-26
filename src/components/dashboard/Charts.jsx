@@ -22,7 +22,7 @@ const Charts = () => {
 
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-left justify-between mb-6">
         <div>
           <h3 className="text-lg font-bold text-black mb-1">Yearly Earnings Overview</h3>
           <p className="text-sm text-gray-500">$5000</p>
@@ -36,8 +36,8 @@ const Charts = () => {
             data={chartData}
             margin={{
               top: 5,
-              right: 30,
-              left: 20,
+              right: 5,
+              left: 0,
               bottom: 5,
             }}
           >

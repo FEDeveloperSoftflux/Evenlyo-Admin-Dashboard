@@ -57,7 +57,8 @@ const ListingTable = ({ searchTerm, onViewSubcategories }) => {
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="overflow-x-auto">
+      {/* Desktop Table View - Hidden on mobile */}
+      <div className="hidden lg:block overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
@@ -125,13 +126,94 @@ const ListingTable = ({ searchTerm, onViewSubcategories }) => {
                     >
                       <img src="/assets/View.svg" alt="View Subcategories" className="w-4 h-4" />
                     </button>
-
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Card View - Only visible on mobile */}
+      <div className="lg:hidden">
+        <div className="divide-y divide-gray-100">
+          {filteredCategories.map((category) => (
+            <div key={category.id} className="p-4 hover:bg-gray-50 transition-colors">
+              {/* Card Header with Icon, Name and Actions */}
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full ${category.bgColor} flex items-center justify-center flex-shrink-0`}>
+                    <img src={category.icon} alt={category.name} className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-semibold text-gray-900 truncate">{category.name}</div>
+                    <div className="text-xs text-gray-500 mt-1">Category</div>
+                  </div>
+                </div>
+                
+              </div>
+
+              {/* Card Content - Category Details */}
+              <div className="space-y-3 ml-2">
+                {/* Description */}
+                <div>
+                  <span className="text-xs font-medium text-gray-500 uppercase">Description</span>
+                  <p className="text-sm text-gray-900 mt-1">{category.description}</p>
+                </div>
+
+                {/* Subcategories */}
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <span className="text-xs font-medium text-gray-500 uppercase">Subcategories</span>
+                    <div className="mt-2">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        {category.subcategories.length} Categories
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center flex-shrink-0 ml-3">
+                  {/* Edit Button */}
+                  <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <img src="/assets/Edit.svg" alt="Edit" className="w-4 h-4" />
+                  </button>
+
+                  {/* Delete Button */}
+                  <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                    <img src="/assets/Delete.svg" alt="Delete" className="w-4 h-4" />
+                  </button>
+
+                  {/* View Subcategories Button */}
+                  <button 
+                    onClick={() => handleViewSubcategories(category)}
+                    className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <img src="/assets/View.svg" alt="View Subcategories" className="w-4 h-4" />
+                  </button>
+                </div>
+                </div>
+
+                {/* Subcategory List Preview */}
+                <div>
+                  <div className="flex flex-wrap gap-2">
+                    {category.subcategories.slice(0, 3).map((subcategory, index) => (
+                      <span 
+                        key={index}
+                        className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-md"
+                      >
+                        {subcategory}
+                      </span>
+                    ))}
+                    {category.subcategories.length > 3 && (
+                      <span className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-500 rounded-md">
+                        +{category.subcategories.length - 3} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Empty State */}

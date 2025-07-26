@@ -11,6 +11,7 @@ import ReportManagement from './pages/ReportManagement'
 import BlogManagement from './pages/BlogManagement'
 import CustomerSupport from './pages/CustomerSupport'
 import Settings from './pages/Settings'
+import Notifications from './pages/Notifications'
 import Sidebar from './components/common/Sidebar'
 import './App.css'
 import './styles/design-system.css'
@@ -43,6 +44,8 @@ function App() {
         return <CustomerSupport />
       case 'settings':
         return <Settings />
+      case 'notifications':
+        return <Notifications />
       default:
         return <Dashboard />
     }

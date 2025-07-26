@@ -79,8 +79,6 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
     subcategory.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
-
   const getToggleStatus = (isActive) => isActive ? 'Active' : 'De-Active';
   const getToggleColor = (isActive) => isActive ? 'bg-gradient-brand' : 'bg-pink-100';
   const getToggleThumbPosition = (isActive) => isActive ? 'translate-x-7' : 'translate-x-1';
@@ -145,7 +143,7 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
             </button>
           </div>
 
-          <div className="mb-6 flex items-start justify-between">
+          <div className="mb-6 flex flex-col lg:flex-row lg:items-start justify-between gap-4">
             <div>
               <h1 className="text-responsive-h2 text-gray-900 mb-2">Listing All Sub Category's</h1>
               <p className="text-md text-gray-400">
@@ -155,7 +153,7 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
             <div className="flex flex-col sm:flex-row gap-3">
               <button 
                 onClick={handleOpenModal}
-                className="bg-gradient-brand text-white px-4 py-2 rounded-xl hover:bg-pink-600 transition-colors flex items-center gap-2"
+                className="bg-gradient-brand text-white px-4 py-2 rounded-xl hover:bg-pink-600 transition-colors flex items-center gap-2 justify-center"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -185,9 +183,10 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
             </div>
           </div>
 
-          {/* Subcategories Table */}
+          {/* Subcategories Table/Cards */}
           <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="overflow-x-auto">
+            {/* Desktop Table View - Hidden on mobile */}
+            <div className="hidden lg:block overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="bg-pink-100">
@@ -210,7 +209,6 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredSubcategories.map((subcategory, index) => {
-                    // Mock data for demonstration
                     const isActive = subcategoryStates[subcategory] || false;
 
                     return (
@@ -241,7 +239,7 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
                           <div className="flex items-center space-x-4">
                             <button 
                               onClick={() => toggleSubcategoryStatus(subcategory)}
-                              className={`relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 ease-in-out   ${getToggleColor(isActive)}`}
+                              className={`relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 ease-in-out ${getToggleColor(isActive)}`}
                             >
                               <span className="sr-only">Toggle status</span>
                               <span
@@ -272,6 +270,76 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
               </table>
             </div>
 
+            {/* Mobile Card View - Only visible on mobile */}
+            <div className="lg:hidden">
+              <div className="divide-y divide-gray-100">
+                {filteredSubcategories.map((subcategory, index) => {
+                  const isActive = subcategoryStates[subcategory] || false;
+
+                  return (
+                    <div key={index} className="p-4 hover:bg-gray-50 transition-colors">
+                      {/* Card Header with Icon, Name and Actions */}
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center flex-shrink-0">
+                            <img 
+                              src={subcategoryIcons[subcategory] || '/assets/default.svg'} 
+                              alt={subcategory} 
+                              className="w-7 h-7" 
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-base font-semibold text-gray-900 truncate">{subcategory}</div>
+                            <div className="text-sm text-gray-500 mt-1">Sub Category</div>
+                          </div>
+                        </div>
+                        
+                        {/* Actions */}
+                        <div className="flex items-center  flex-shrink-0 ml-2">
+                          <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                            <img src="/assets/Edit.svg" alt="Edit" className="w-4 h-4" />
+                          </button>
+                          <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                            <img src="/assets/Delete.svg" alt="Delete" className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Card Content - Subcategory Details */}
+                      <div className="space-y-3 ml-3">
+                        {/* Description */}
+                        <div>
+                          <span className="text-xs font-medium text-gray-500 uppercase">Description</span>
+                          <p className="text-sm text-gray-900 mt-1">123 Business Park...</p>
+                        </div>
+
+                        {/* Status Toggle */}
+                        <div>
+                          <span className="text-xs font-medium text-gray-500 uppercase block mb-2">Status</span>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                              <button 
+                                onClick={() => toggleSubcategoryStatus(subcategory)}
+                                className={`relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-300 ease-in-out ${getToggleColor(isActive)}`}
+                              >
+                                <span className="sr-only">Toggle status</span>
+                                <span
+                                  className={`inline-block h-6 w-6 transform rounded-full shadow-lg ring-0 transition-transform duration-300 ease-in-out ${getToggleThumbPosition(isActive)} ${getToggleThumbColor(isActive)}`}
+                                />
+                              </button>
+                              <span className={`text-sm font-medium ${getStatusTextColor(isActive)}`}>
+                                {getToggleStatus(isActive)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Empty State */}
             {filteredSubcategories.length === 0 && (
               <div className="px-6 py-12 text-center">
@@ -291,13 +359,13 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
       {/* Create New Sub Category Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl shadow-xl w-full max-w-2xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-xl w-full max-w-2xl mx-auto max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 ">
+            <div className="flex items-center justify-between p-6 border-b border-gray-100 sticky top-0 bg-white rounded-t-3xl">
               <h2 className="text-lg font-bold text-gray-900">Create New Sub Category</h2>
               <button 
                 onClick={handleCloseModal}
-                className="p-2 rounded-xl transition-colors bg-gradient-brand text-white"
+                className="p-2 rounded-xl transition-colors bg-gradient-brand text-white hover:opacity-90"
               >
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -308,7 +376,7 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
             {/* Modal Body */}
             <div className="p-6">
               {/* Category Name and Upload Icon Row */}
-              <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 {/* Category Name */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -339,12 +407,12 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
                     />
                     <label
                       htmlFor="icon-upload"
-                      className="px-4 py-2 bg-pink-100 text-pink-400 text-xs font-normal cursor-pointer hover:bg-pink-100 transition-colors flex items-center justify-center "
+                      className="px-4 py-2 bg-pink-100 text-pink-400 text-xs font-normal cursor-pointer hover:bg-pink-200 transition-colors flex items-center justify-center whitespace-nowrap"
                     >
                       Choose File
                     </label>
-                    <span className="flex-1 px-4 py-3 text-gray-400 text-sm flex items-center bg-white">
-                      Upload Icon
+                    <span className="flex-1 px-4 py-3 text-gray-400 text-sm flex items-center bg-white min-w-0 truncate">
+                      {formData.icon ? formData.icon.name : 'Upload Icon'}
                     </span>
                   </div>
                   {formData.icon && (
@@ -369,16 +437,16 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
               </div>
 
               {/* Modal Footer */}
-              <div className="flex gap-3 justify-end">
+              <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
                 <button
                   onClick={handleCloseModal}
-                  className="px-6 py-2 border border-pink-200 text-pink-600 rounded-xl font-medium hover:bg-pink-50 transition-colors"
+                  className="px-6 py-2 border border-pink-200 text-pink-600 rounded-xl font-medium hover:bg-pink-50 transition-colors order-2 sm:order-1"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleCreateCategory}
-                  className="px-6 py-2 bg-gradient-brand text-white rounded-xl font-medium hover:opacity-90 transition-opacity"
+                  className="px-6 py-2 bg-gradient-brand text-white rounded-xl font-medium hover:opacity-90 transition-opacity order-1 sm:order-2"
                 >
                   Create Category
                 </button>

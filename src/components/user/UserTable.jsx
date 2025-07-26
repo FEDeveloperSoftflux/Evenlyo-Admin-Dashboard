@@ -360,16 +360,23 @@ const UserTable = ({ userType = 'clients', selectedPlan = 'All Plans', filters =
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-pink-100">
-                <input
-                  type="checkbox"
-                  checked={selectedUsers.length === currentUsers.length && currentUsers.length > 0}
-                  onChange={handleSelectAll}
-                  className="rounded border-gray-300 text-pink-600 focus:ring-pink-500"
-                />
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-pink-100">
-                S#
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-pink-100" colSpan={2}>
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`w-4 h-4 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer ${selectedUsers.length === currentUsers.length && currentUsers.length > 0 ? 'bg-gradient-brand border-white' : 'border-gray-300 bg-white'}`}
+                    onClick={handleSelectAll}
+                    role="checkbox"
+                    aria-checked={selectedUsers.length === currentUsers.length && currentUsers.length > 0}
+                    tabIndex={0}
+                  >
+                    {selectedUsers.length === currentUsers.length && currentUsers.length > 0 && (
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
+                  <span>S#</span>
+                </div>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-pink-100">
                 ID
@@ -402,16 +409,23 @@ const UserTable = ({ userType = 'clients', selectedPlan = 'All Plans', filters =
           <tbody className="bg-white divide-y divide-gray-100">
             {currentUsers.map((user) => (
               <tr key={user.sn} className="hover:bg-gray-50">
-                <td className="px-6 py-4">
-                  <input
-                    type="checkbox"
-                    checked={selectedUsers.includes(user.sn)}
-                    onChange={() => handleSelectUser(user.sn)}
-                    className="rounded border-gray-300 text-pink-600 focus:ring-pink-500"
-                  />
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-900">
-                  {user.sn}
+                <td className="px-6 py-4" colSpan={2}>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`w-4 h-4 rounded-md border-2 flex items-center justify-center transition-colors cursor-pointer ${selectedUsers.includes(user.sn) ? 'bg-gradient-brand border-white' : 'border-gray-300 bg-white'}`}
+                      onClick={() => handleSelectUser(user.sn)}
+                      role="checkbox"
+                      aria-checked={selectedUsers.includes(user.sn)}
+                      tabIndex={0}
+                    >
+                      {selectedUsers.includes(user.sn) && (
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </div>
+                    <span className="text-sm text-gray-900">{user.sn}</span>
+                  </div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-col">

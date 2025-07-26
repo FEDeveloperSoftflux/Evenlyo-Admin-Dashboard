@@ -297,14 +297,14 @@ const CustomerSupport = () => {
                 <button onClick={closeModal} className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-xl bg-gradient-brand hover:bg-pink-400 transition text-white hover:text-white text-xl  shadow-lg focus:outline-none">
                   &times;
                 </button>
-                <h2 className="text-xl font-bold mb-1">Details</h2>
+                <h2 className="text-xl font-bold mb-1">Tickets</h2>
                 <p className="text-gray-400 mb-6">Send email to clients</p>
                 <div className="mb-4">
                   <label className=" text-gray-500 text-sm mb-1">Email:</label>
                   <span className= "ml-2 text-black text-sm font-medium">{modalTicket.email || 'john.smith@email.com'}</span>
                 </div>
                 <div className="mb-2">
-                  <label className="block text-black font-semibold mb-1">Message</label>
+                  <label className="block text-black font-semibold mb-1">Detail</label>
                   <textarea
                     className="w-full rounded-xl bg-gray-50 border-0 p-4  text-gray-500 text-sm resize-none min-h-[80px]"
                     value={modalTicket.details || ''}

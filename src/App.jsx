@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Dashboard from './pages/Dashboard'
+import AdminLogin from './pages/AdminLogin'
 import UserManagement from './pages/UserManagement'
 import ListingManagement from './pages/ListingManagement'
 import BookingAnalytics from './pages/BookingAnalytics'
@@ -9,12 +10,14 @@ import PaymentPlans from './pages/PaymentPlans'
 import ReportManagement from './pages/ReportManagement'
 import BlogManagement from './pages/BlogManagement'
 import CustomerSupport from './pages/CustomerSupport'
+import Settings from './pages/Settings'
 import Sidebar from './components/common/Sidebar'
 import './App.css'
 import './styles/design-system.css'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const renderPage = () => {
     switch (currentPage) {
@@ -38,60 +41,20 @@ function App() {
         return <BlogManagement />
       case 'customer-support':
         return <CustomerSupport />
-      case 'events':
-        return (
-          <div className="flex-1 overflow-y-auto">
-            <div className="container-7xl py-responsive">
-              <h1 className="text-responsive-h2 text-gray-900 mb-6">Events Management</h1>
-              <div className="card-mobile space-mobile-md">
-                <p className="text-gray-600">Events page coming soon...</p>
-              </div>
-            </div>
-          </div>
-        )
-      case 'users':
-        return (
-          <div className="flex-1 overflow-y-auto">
-            <div className="container-7xl py-responsive">
-              <h1 className="text-responsive-h2 text-gray-900 mb-6">Users Management</h1>
-              <div className="card-mobile space-mobile-md">
-                <p className="text-gray-600">Users page coming soon...</p>
-              </div>
-            </div>
-          </div>
-        )
-      case 'analytics':
-        return (
-          <div className="flex-1 overflow-y-auto">
-            <div className="container-7xl py-responsive">
-              <h1 className="text-responsive-h2 text-gray-900 mb-6">Analytics</h1>
-              <div className="card-mobile space-mobile-md">
-                <p className="text-gray-600">Analytics page coming soon...</p>
-              </div>
-            </div>
-          </div>
-        )
       case 'settings':
-        return (
-          <div className="flex-1 overflow-y-auto">
-            <div className="container-7xl py-responsive">
-              <h1 className="text-responsive-h2 text-gray-900 mb-6">Settings</h1>
-              <div className="card-mobile space-mobile-md">
-                <p className="text-gray-600">Settings page coming soon...</p>
-              </div>
-            </div>
-          </div>
-        )
+        return <Settings />
       default:
         return <Dashboard />
     }
   }
 
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={() => setIsAuthenticated(true)} />;
+  }
   return (
     <div className="h-screen bg-gray-50 flex overflow-hidden">
       {/* Sidebar */}
       <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      
       {/* Main Content */}
       <main className="flex-1 lg:ml-0 flex flex-col overflow-hidden">
         {renderPage()}

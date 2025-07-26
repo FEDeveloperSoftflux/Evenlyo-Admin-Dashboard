@@ -122,438 +122,415 @@ const Tracking = () => {
 
   // Mock data for tracking orders
   const trackingData = [
-    {
-      id: 'TRK001',
-      trackingId: 'TRK001',
-      orderId: 'ORD-2024-001',
-      clientName: 'John Smith',
-      phone: '+1 (555) 123-4567',
-      dateTime: '2024-06-27',
-      time: '10:30',
-      buyer: {
-        name: 'John Smith',
-        avatar: '/assets/jaydeep.png'
-      },
-      seller: {
-        name: 'Tech Store',  
-        avatar: '/assets/Vendor1.png'
-      },
-      itemList: 'DJ Equipment, Sound System',
-      destination: '456 Business Ave, Commerce City',
-      status: 'Delivered',
-      statusColor: 'text-yellow-600 bg-yellow-50',
-      statusLabel: 'Delivered',
-      totalPrice: '$2,450.00',
-      progressNote: 'Order delivered to destination',
-      timeline: [
-          {
-          title: 'Request Sent',
-          description: 'Client sent order request',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Client',
-          labelColor: 'bg-pink-100 text-pink-600',
-          date: '2024-06-25 09:00 AM'
-        },
-        {
-          title: 'Order Accepted',
-          description: 'Vendor accepted the order',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Confirmed',
-          labelColor: 'bg-orange-100 text-orange-600',
-          date: '2024-06-25 09:00 AM'
-        },
-        {
-          title: 'Picked Up',
-          description: 'Order picked up from location',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Driver',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-25 10:30 AM'
-        },
-        {
-          title: 'Delivered',
-          description: 'Order delivered to destination',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'In Transit',
-          labelColor: 'bg-blue-100 text-blue-600',
-          date: '2024-06-27 08:00 AM'
-        },
-        {
-          title: 'Received',
-          description: 'Client confirmed receipt',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Completed',
-          labelColor: 'bg-yellow-100 text-yellow-600',
-          date: '2024-06-27 10:30 AM'
-        },
-        {
-          title: 'Completed',
-          description: 'Client confirmed receipt',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Completed',
-          labelColor: 'bg-yellow-100 text-yellow-600',
-          date: '2024-06-27 10:30 AM'
-        }
-      ]
-    },
-    {
-      id: 'TRK002',
-      trackingId: 'TRK002',
-      orderId: 'ORD-2024-002',
-      clientName: 'Sarah Johnson',
-      phone: '+1 (555) 987-6543',
-      dateTime: '2024-06-27',
-      time: '10:30',
-      buyer: {
-        name: 'Sarah Johnson',
-        avatar: '/assets/jaydeep.png'
-      },
-      seller: {
-        name: 'Event Planners',
-        avatar: '/assets/Vendor1.png'
-      },
-      itemList: 'Wedding Decorations, Flowers',
-      destination: '789 Wedding Venue, Romance City',
-      status: 'On the way',
-      statusColor: 'text-pink-600 bg-pink-50',
-      statusLabel: 'In Transit',
-      totalPrice: '$1,850.00',
-      progressNote: 'Items are currently being transported to the venue. Expected arrival in 2 hours.',
-      timeline: [
-        {
-          title: 'Order Placed',
-          description: 'Order was successfully placed and payment received',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Confirmed',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-26 11:00 AM'
-        },
-        {
-          title: 'Vendor Confirmed',
-          description: 'Vendor accepted the order and started preparation',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Processing',
-          labelColor: 'bg-blue-100 text-blue-600',
-          date: '2024-06-26 12:30 PM'
-        },
-        {
-          title: 'Items Prepared',
-          description: 'All items have been prepared and quality checked',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Ready',
-          labelColor: 'bg-purple-100 text-purple-600',
-          date: '2024-06-27 07:00 AM'
-        },
-        {
-          title: 'Out for Delivery',
-          description: 'Items are on the way to destination',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'In Transit',
-          labelColor: 'bg-orange-100 text-orange-600',
-          date: '2024-06-27 09:00 AM'
-        },
-        {
-          title: 'Delivered',
-          description: 'Order will be delivered to customer',
-          completed: false,
-          icon: '/assets/Track.svg',
-          label: 'Pending',
-          labelColor: 'bg-gray-100 text-gray-600',
-          date: 'Expected: 2024-06-27 12:00 PM'
-        }
-      ]
-    }
-  ].concat([
-    // TRK003 - Received back
-    {
-      id: 'TRK003',
-      trackingId: 'TRK003',
-      orderId: 'ORD-2024-003',
-      clientName: 'Michael Brown',
-      phone: '+1 (555) 456-7890',
-      dateTime: '2024-06-26',
-      time: '14:20',
-      buyer: {
-        name: 'Michael Brown',
-        avatar: '/assets/jaydeep.png'
-      },
-      seller: {
-        name: 'Catering Co',
-        avatar: '/assets/Vendor1.png'
-      },
-      itemList: 'Catering Equipment, Tables',
-      destination: '321 Event Center, Downtown',
-      status: 'Received back',
-      statusColor: 'text-orange-600 bg-orange-50',
-      statusLabel: 'Returned',
-      totalPrice: '$1,200.00',
-      progressNote: 'Order has been returned due to customer request. Full refund processed.',
-      timeline: [
-        {
-          title: 'Order Placed',
-          description: 'Order was successfully placed and payment received',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Confirmed',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-24 10:00 AM'
-        },
-        {
-          title: 'Vendor Confirmed',
-          description: 'Vendor accepted the order and started preparation',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Processing',
-          labelColor: 'bg-blue-100 text-blue-600',
-          date: '2024-06-24 11:30 AM'
-        },
-        {
-          title: 'Items Prepared',
-          description: 'All items have been prepared and quality checked',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Ready',
-          labelColor: 'bg-purple-100 text-purple-600',
-          date: '2024-06-25 09:00 AM'
-        },
-        {
-          title: 'Out for Delivery',
-          description: 'Items were delivered to customer location',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Delivered',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-25 14:00 PM'
-        },
-        {
-          title: 'Returned',
-          description: 'Customer requested return and items were collected back',
-          completed: true,
-          icon: '/assets/Approved.svg',
-          label: 'Returned',
-          labelColor: 'bg-orange-100 text-orange-600',
-          date: '2024-06-26 14:20 PM'
-        }
-      ]
-    },
-    // TRK004 - Complete
-    {
-      id: 'TRK004',
-      trackingId: 'TRK004',
-      orderId: 'ORD-2024-004',
-      clientName: 'Emily Davis',
-      phone: '+1 (555) 789-0123',
-      dateTime: '2024-06-25',
-      time: '16:45',
-      buyer: {
-        name: 'Emily Davis',
-        avatar: '/assets/jaydeep.png'
-      },
-      seller: {
-        name: 'Elite Events',
-        avatar: '/assets/Vendor1.png'
-      },
-      itemList: 'Lighting Equipment, Decorations',
-      destination: '654 Grand Ballroom, Luxury District',
-      status: 'Complete',
-      statusColor: 'text-green-600 bg-green-50',
-      statusLabel: 'Complete',
-      totalPrice: '$3,750.00',
-      progressNote: 'Order completed successfully. Customer feedback received and payment confirmed.',
-      timeline: [
-        {
-          title: 'Order Placed',
-          description: 'Order was successfully placed and payment received',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Confirmed',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-23 09:30 AM'
-        },
-        {
-          title: 'Vendor Confirmed',
-          description: 'Vendor accepted the order and started preparation',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Processing',
-          labelColor: 'bg-blue-100 text-blue-600',
-          date: '2024-06-23 10:00 AM'
-        },
-        {
-          title: 'Items Prepared',
-          description: 'All items have been prepared and quality checked',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Ready',
-          labelColor: 'bg-purple-100 text-purple-600',
-          date: '2024-06-24 15:00 PM'
-        },
-        {
-          title: 'Out for Delivery',
-          description: 'Items are on the way to destination',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'In Transit',
-          labelColor: 'bg-orange-100 text-orange-600',
-          date: '2024-06-25 08:00 AM'
-        },
-        {
-          title: 'Delivered',
-          description: 'Order successfully delivered and event completed',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Completed',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-25 16:45 PM'
-        }
-      ]
-    },
-    // TRK005 - Rejected
-    {
-      id: 'TRK005',
-      trackingId: 'TRK005',
-      orderId: 'ORD-2024-005',
-      clientName: 'David Wilson',
-      phone: '+1 (555) 234-5678',
-      dateTime: '2024-06-24',
-      time: '11:15',
-      buyer: {
-        name: 'David Wilson',
-        avatar: '/assets/jaydeep.png'
-      },
-      seller: {
-        name: 'Party Perfect',
-        avatar: '/assets/Vendor1.png'
-      },
-      itemList: 'Sound System, Microphones',
-      destination: '987 Community Hall, Suburbs',
-      status: 'Rejected',
-      statusColor: 'text-red-600 bg-red-50',
-      statusLabel: 'Rejected',
-      totalPrice: '$890.00',
-      progressNote: 'Order was rejected by vendor due to unavailability of requested items during the specified time.',
-      timeline: [
-        {
-          title: 'Order Placed',
-          description: 'Order was successfully placed and payment received',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Confirmed',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-23 14:00 PM'
-        },
-        {
-          title: 'Vendor Review',
-          description: 'Vendor reviewed the order requirements',
-          completed: true,
-          icon: '/assets/Track.svg',
-          label: 'Under Review',
-          labelColor: 'bg-yellow-100 text-yellow-600',
-          date: '2024-06-24 10:00 AM'
-        },
-        {
-          title: 'Order Rejected',
-          description: 'Vendor rejected the order due to item unavailability',
-          completed: true,
-          icon: '/assets/Box.svg',
-          label: 'Rejected',
-          labelColor: 'bg-red-100 text-red-600',
-          date: '2024-06-24 11:15 AM'
-        },
-        {
-          title: 'Refund Processed',
-          description: 'Full refund has been processed to customer account',
-          completed: true,
-          icon: '/assets/Approved.svg',
-          label: 'Refunded',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-24 12:00 PM'
-        }
-      ]
-    },
-    // TRK006 - Claim
-    {
-      id: 'TRK006',
-      trackingId: 'TRK006',
-      orderId: 'ORD-2024-006',
-      clientName: 'Lisa Anderson',
-      phone: '+1 (555) 345-6789',
-      dateTime: '2024-06-26',
-      time: '09:30',
-      buyer: {
-        name: 'Lisa Anderson',
-        avatar: '/assets/jaydeep.png'
-      },
-      seller: {
-        name: 'Dream Weddings',
-        avatar: '/assets/Vendor1.png'
-      },
-      itemList: 'Wedding Arch, Flowers, Chairs',
-      destination: '123 Garden Venue, Countryside',
-      status: 'Claim',
-      statusColor: 'text-purple-600 bg-purple-50',
-      statusLabel: 'Claimed',
-      totalPrice: '$2,150.00',
-      progressNote: 'Customer has filed a claim regarding damaged items. Investigation in progress.',
-      timeline: [
-        {
-          title: 'Order Placed',
-          description: 'Order was successfully placed and payment received',
-          completed: true,
-          icon: '/assets/Create.svg',
-          label: 'Confirmed',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-24 08:00 AM'
-        },
-        {
-          title: 'Vendor Confirmed',
-          description: 'Vendor accepted the order and started preparation',
-          completed: true,
-          icon: '/assets/Tick.svg',
-          label: 'Processing',
-          labelColor: 'bg-blue-100 text-blue-600',
-          date: '2024-06-24 09:30 AM'
-        },
-        {
-          title: 'Items Prepared',
-          description: 'All items have been prepared and quality checked',
-          completed: true,
-          icon: '/assets/Box.svg',
-          label: 'Ready',
-          labelColor: 'bg-purple-100 text-purple-600',
-          date: '2024-06-25 16:00 PM'
-        },
-        {
-          title: 'Delivered',
-          description: 'Items were delivered to venue',
-          completed: true,
-          icon: '/assets/Tracking.svg',
-          label: 'Delivered',
-          labelColor: 'bg-green-100 text-green-600',
-          date: '2024-06-26 07:00 AM'
-        },
-        {
-          title: 'Claim Filed',
-          description: 'Customer filed a claim for damaged items',
-          completed: true,
-          icon: '/assets/Approved.svg',
-          label: 'Under Investigation',
-          labelColor: 'bg-purple-100 text-purple-600',
-          date: '2024-06-26 09:30 AM'
-        }
-      ]
-    }
-  ]);
+ {
+   id: 'TRK001',
+   trackingId: 'TRK001',
+   orderId: 'ORD-2024-001',
+   clientName: 'John Smith',
+   phone: '+1 (555) 123-4567',
+   dateTime: '2024-06-27',
+   time: '10:30',
+   buyer: {
+     name: 'John Smith',
+     avatar: '/assets/jaydeep.png'
+   },
+   seller: {
+     name: 'Tech Store',  
+     avatar: '/assets/Vendor1.png'
+   },
+   itemList: 'DJ Equipment, Sound System',
+   destination: '456 Business Ave, Commerce City',
+   status: 'Delivered',
+   statusColor: 'text-yellow-600 bg-yellow-50',
+   statusLabel: 'Delivered',
+   totalPrice: '$2,450.00',
+   progressNote: 'Order delivered to destination',
+   timeline: [
+     {
+       title: 'Request Sent',
+       description: 'Client sent order request',
+       completed: true,
+       icon: '/assets/Sent.svg',
+       label: 'Client',
+       labelColor: 'bg-pink-100 text-pink-600',
+       date: '2024-06-25 09:00 AM'
+     },
+     {
+       title: 'Order Accepted',
+       description: 'Vendor accepted the order',
+       completed: true,
+       icon: '/assets/Accepted.svg',
+       label: 'Confirmed',
+       labelColor: 'bg-orange-100 text-orange-600',
+       date: '2024-06-25 09:00 AM'
+     },
+     {
+       title: 'Picked Up',
+       description: 'Order picked up from location',
+       completed: true,
+       icon: '/assets/Pickup.svg',
+       label: 'Driver',
+       labelColor: 'bg-green-100 text-green-600',
+       date: '2024-06-25 10:30 AM'
+     },
+     {
+       title: 'Delivered',
+       description: 'Order delivered to destination',
+       completed: true,
+       icon: '/assets/Delivered.svg',
+       label: 'In Transit',
+       labelColor: 'bg-blue-100 text-blue-600',
+       date: '2024-06-27 08:00 AM'
+     },
+     {
+       title: 'Received',
+       description: 'Client confirmed receipt',
+       completed: true,
+       icon: '/assets/Received.svg',
+       label: 'Completed',
+       labelColor: 'bg-yellow-100 text-yellow-600',
+       date: '2024-06-27 10:30 AM'
+     },
+     {
+       title: 'Completed',
+       description: 'Client confirmed receipt',
+       completed: true,
+       icon: '/assets/Accepted.svg',
+       label: 'Completed',
+       labelColor: 'bg-yellow-100 text-yellow-600',
+       date: '2024-06-27 10:30 AM'
+     }
+   ]
+ },
+ {
+   id: 'TRK002',
+   trackingId: 'TRK002',
+   orderId: 'ORD-2024-002',
+   clientName: 'Sarah Johnson',
+   phone: '+1 (555) 987-6543',
+   dateTime: '2024-06-27',
+   time: '10:30',
+   buyer: {
+     name: 'Sarah Johnson',
+     avatar: '/assets/jaydeep.png'
+   },
+   seller: {
+     name: 'Event Planners',
+     avatar: '/assets/Vendor1.png'
+   },
+   itemList: 'Wedding Decorations, Flowers',
+   destination: '789 Wedding Venue, Romance City',
+   status: 'On the way',
+   statusColor: 'text-pink-600 bg-pink-50',
+   statusLabel: 'In Transit',
+   totalPrice: '$1,850.00',
+   progressNote: 'Items are currently being transported to the venue. Expected arrival in 2 hours.',
+   timeline: [
+     {
+       title: 'Request Sent',
+       description: 'Client sent order request',
+       completed: true,
+       icon: '/assets/Sent.svg',
+       label: 'Client',
+       labelColor: 'bg-pink-100 text-pink-600',
+       date: '2024-06-26 11:00 AM'
+     },
+     {
+       title: 'Order Accepted',
+       description: 'Vendor accepted the order',
+       completed: true,
+       icon: '/assets/Accepted.svg',
+       label: 'Confirmed',
+       labelColor: 'bg-orange-100 text-orange-600',
+       date: '2024-06-26 12:30 PM'
+     },
+     {
+       title: 'Picked Up',
+       description: 'Order picked up from location',
+       completed: true,
+       icon: '/assets/Pickup.svg',
+       label: 'Driver',
+       labelColor: 'bg-green-100 text-green-600',
+       date: '2024-06-27 07:00 AM'
+     },
+     {
+       title: 'Delivered',
+       description: 'Order delivered to destination',
+       completed: false,
+       icon: '/assets/Delivered.svg',
+       label: 'In Transit',
+       labelColor: 'bg-blue-100 text-blue-600',
+       date: '2024-06-27 09:00 AM'
+     },
+     {
+       title: 'Received',
+       description: 'Client confirmed receipt',
+       completed: false,
+       icon: '/assets/Received.svg',
+       label: 'Completed',
+       labelColor: 'bg-gray-100 text-gray-600',
+       date: 'Expected: 2024-06-27 12:00 PM'
+     }
+   ]
+ },
+ {
+   id: 'TRK003',
+   trackingId: 'TRK003',
+   orderId: 'ORD-2024-003',
+   clientName: 'Michael Brown',
+   phone: '+1 (555) 456-7890',
+   dateTime: '2024-06-26',
+   time: '14:20',
+   buyer: {
+     name: 'Michael Brown',
+     avatar: '/assets/jaydeep.png'
+   },
+   seller: {
+     name: 'Catering Co',
+     avatar: '/assets/Vendor1.png'
+   },
+   itemList: 'Catering Equipment, Tables',
+   destination: '321 Event Center, Downtown',
+   status: 'Received back',
+   statusColor: 'text-orange-600 bg-orange-50',
+   statusLabel: 'Returned',
+   totalPrice: '$1,200.00',
+   progressNote: 'Order has been returned due to customer request. Full refund processed.',
+   timeline: [
+     {
+       title: 'Request Sent',
+       description: 'Client sent order request',
+       completed: true,
+       icon: '/assets/Sent.svg',
+       label: 'Client',
+       labelColor: 'bg-pink-100 text-pink-600',
+       date: '2024-06-24 10:00 AM'
+     },
+     {
+       title: 'Order Accepted',
+       description: 'Vendor accepted the order',
+       completed: true,
+       icon: '/assets/Accepted.svg',
+       label: 'Confirmed',
+       labelColor: 'bg-orange-100 text-orange-600',
+       date: '2024-06-24 11:30 AM'
+     },
+     {
+       title: 'Picked Up',
+       description: 'Order picked up from location',
+       completed: true,
+       icon: '/assets/Pickup.svg',
+       label: 'Driver',
+       labelColor: 'bg-green-100 text-green-600',
+       date: '2024-06-25 09:00 AM'
+     },
+     {
+       title: 'Delivered',
+       description: 'Order delivered to destination',
+       completed: true,
+       icon: '/assets/Delivered.svg',
+       label: 'In Transit',
+       labelColor: 'bg-blue-100 text-blue-600',
+       date: '2024-06-25 14:00 PM'
+     },
+     {
+       title: 'Received',
+       description: 'Client confirmed receipt',
+       completed: true,
+       icon: '/assets/Received.svg',
+       label: 'Completed',
+       labelColor: 'bg-yellow-100 text-yellow-600',
+       date: '2024-06-26 14:20 PM'
+     }
+   ]
+ },
+ {
+   id: 'TRK004',
+   trackingId: 'TRK004',
+   orderId: 'ORD-2024-004',
+   clientName: 'Emily Davis',
+   phone: '+1 (555) 789-0123',
+   dateTime: '2024-06-25',
+   time: '16:45',
+   buyer: {
+     name: 'Emily Davis',
+     avatar: '/assets/jaydeep.png'
+   },
+   seller: {
+     name: 'Elite Events',
+     avatar: '/assets/Vendor1.png'
+   },
+   itemList: 'Lighting Equipment, Decorations',
+   destination: '654 Grand Ballroom, Luxury District',
+   status: 'Complete',
+   statusColor: 'text-green-600 bg-green-50',
+   statusLabel: 'Complete',
+   totalPrice: '$3,750.00',
+   progressNote: 'Order completed successfully. Customer feedback received and payment confirmed.',
+   timeline: [
+     {
+       title: 'Request Sent',
+       description: 'Client sent order request',
+       completed: true,
+       icon: '/assets/Sent.svg',
+       label: 'Client',
+       labelColor: 'bg-pink-100 text-pink-600',
+       date: '2024-06-23 09:30 AM'
+     },
+     {
+       title: 'Order Accepted',
+       description: 'Vendor accepted the order',
+       completed: true,
+       icon: '/assets/Accepted.svg',
+       label: 'Confirmed',
+       labelColor: 'bg-orange-100 text-orange-600',
+       date: '2024-06-23 10:00 AM'
+     },
+     {
+       title: 'Picked Up',
+       description: 'Order picked up from location',
+       completed: true,
+       icon: '/assets/Pickup.svg',
+       label: 'Driver',
+       labelColor: 'bg-green-100 text-green-600',
+       date: '2024-06-24 15:00 PM'
+     },
+     {
+       title: 'Delivered',
+       description: 'Order delivered to destination',
+       completed: true,
+       icon: '/assets/Delivered.svg',
+       label: 'In Transit',
+       labelColor: 'bg-blue-100 text-blue-600',
+       date: '2024-06-25 08:00 AM'
+     },
+     {
+       title: 'Received',
+       description: 'Client confirmed receipt',
+       completed: true,
+       icon: '/assets/Received.svg',
+       label: 'Completed',
+       labelColor: 'bg-yellow-100 text-yellow-600',
+       date: '2024-06-25 16:45 PM'
+     }
+   ]
+ },
+ {
+   id: 'TRK005',
+   trackingId: 'TRK005',
+   orderId: 'ORD-2024-005',
+   clientName: 'David Wilson',
+   phone: '+1 (555) 234-5678',
+   dateTime: '2024-06-24',
+   time: '11:15',
+   buyer: {
+     name: 'David Wilson',
+     avatar: '/assets/jaydeep.png'
+   },
+   seller: {
+     name: 'Party Perfect',
+     avatar: '/assets/Vendor1.png'
+   },
+   itemList: 'Sound System, Microphones',
+   destination: '987 Community Hall, Suburbs',
+   status: 'Rejected',
+   statusColor: 'text-red-600 bg-red-50',
+   statusLabel: 'Rejected',
+   totalPrice: '$890.00',
+   progressNote: 'Order was rejected by vendor due to unavailability of requested items during the specified time.',
+   timeline: [
+     {
+       title: 'Request Sent',
+       description: 'Client sent order request',
+       completed: true,
+       icon: '/assets/Sent.svg',
+       label: 'Client',
+       labelColor: 'bg-pink-100 text-pink-600',
+       date: '2024-06-23 14:00 PM'
+     },
+     {
+       title: 'Order Accepted',
+       description: 'Vendor accepted the order',
+       completed: false,
+       icon: '/assets/Accepted.svg',
+       label: 'Confirmed',
+       labelColor: 'bg-gray-100 text-gray-600',
+       date: 'Not completed'
+     }
+   ]
+ },
+ {
+   id: 'TRK006',
+   trackingId: 'TRK006',
+   orderId: 'ORD-2024-006',
+   clientName: 'Lisa Anderson',
+   phone: '+1 (555) 345-6789',
+   dateTime: '2024-06-26',
+   time: '09:30',
+   buyer: {
+     name: 'Lisa Anderson',
+     avatar: '/assets/jaydeep.png'
+   },
+   seller: {
+     name: 'Dream Weddings',
+     avatar: '/assets/Vendor1.png'
+   },
+   itemList: 'Wedding Arch, Flowers, Chairs',
+   destination: '123 Garden Venue, Countryside',
+   status: 'Claim',
+   statusColor: 'text-purple-600 bg-purple-50',
+   statusLabel: 'Claimed',
+   totalPrice: '$2,150.00',
+   progressNote: 'Customer has filed a claim regarding damaged items. Investigation in progress.',
+   timeline: [
+     {
+       title: 'Request Sent',
+       description: 'Client sent order request',
+       completed: true,
+       icon: '/assets/Sent.svg',
+       label: 'Client',
+       labelColor: 'bg-pink-100 text-pink-600',
+       date: '2024-06-24 08:00 AM'
+     },
+     {
+       title: 'Order Accepted',
+       description: 'Vendor accepted the order',
+       completed: true,
+       icon: '/assets/Accepted.svg',
+       label: 'Confirmed',
+       labelColor: 'bg-orange-100 text-orange-600',
+       date: '2024-06-24 09:30 AM'
+     },
+     {
+       title: 'Picked Up',
+       description: 'Order picked up from location',
+       completed: true,
+       icon: '/assets/Pickup.svg',
+       label: 'Driver',
+       labelColor: 'bg-green-100 text-green-600',
+       date: '2024-06-25 16:00 PM'
+     },
+     {
+       title: 'Delivered',
+       description: 'Order delivered to destination',
+       completed: true,
+       icon: '/assets/Delivered.svg',
+       label: 'In Transit',
+       labelColor: 'bg-blue-100 text-blue-600',
+       date: '2024-06-26 07:00 AM'
+     },
+     {
+       title: 'Received',
+       description: 'Client confirmed receipt',
+       completed: true,
+       icon: '/assets/Received.svg',
+       label: 'Completed',
+       labelColor: 'bg-yellow-100 text-yellow-600',
+       date: '2024-06-26 09:30 AM'
+     }
+   ]
+ }
+];
 
   const handleFilterChange = (filterType, value) => {
     setSelectedFilters(prev => {

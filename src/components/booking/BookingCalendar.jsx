@@ -76,38 +76,56 @@ const BookingCalendar = ({ selectedDate, onDateChange, events, viewType }) => {
     progressNote: "Your order is being processed and will be ready soon.",
     timeline: [
       {
-        title: "Order Placed",
+        title: "Request Sent",
         description: "Your order has been successfully placed",
         completed: true,
         date: "2024-06-27 10:00",
-        icon: "/assets/Success.png",
+        icon: "/assets/Sent.svg",
         label: "Completed",
         labelColor: "bg-green-100 text-green-600"
       },
       {
-        title: "Order Confirmed",
+        title: "Order Accepted",
         description: "Vendor has confirmed your booking",
         completed: true,
         date: "2024-06-27 11:30",
-        icon: "/assets/Approved.svg",
+        icon: "/assets/Accepted.svg",
         label: "Confirmed",
         labelColor: "bg-blue-100 text-blue-600"
       },
       {
-        title: "In Progress",
+        title: "Picked Up",
         description: "Your booking is being prepared",
         completed: true,
         date: "2024-06-27 14:00",
-        icon: "/assets/Active.svg",
+        icon: "/assets/Pickup.svg",
         label: "Processing",
         labelColor: "bg-yellow-100 text-yellow-600"
       },
       {
-        title: "Ready for Event",
+        title: "Delivered",
         description: "Everything is ready for your event",
         completed: false,
         date: "",
-        icon: "/assets/Tick.svg",
+        icon: "/assets/Delivered.svg",
+        label: "",
+        labelColor: ""
+      },
+            {
+        title: "Received",
+        description: "Everything is ready for your event",
+        completed: false,
+        date: "",
+        icon: "/assets/Received.svg",
+        label: "",
+        labelColor: ""
+      },
+      {
+        title: "Completed",
+        description: "Everything is ready for your event",
+        completed: false,
+        date: "",
+        icon: "/assets/Accepted.svg",
         label: "",
         labelColor: ""
       }

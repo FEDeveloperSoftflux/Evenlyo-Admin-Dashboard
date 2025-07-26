@@ -8,6 +8,7 @@ import RoleManagement from './pages/RoleManagement'
 import PaymentPlans from './pages/PaymentPlans'
 import ReportManagement from './pages/ReportManagement'
 import BlogManagement from './pages/BlogManagement'
+import CustomerSupport from './pages/CustomerSupport'
 import Sidebar from './components/common/Sidebar'
 import './App.css'
 import './styles/design-system.css'
@@ -35,6 +36,8 @@ function App() {
         return <ReportManagement />
       case 'blog-management':
         return <BlogManagement />
+      case 'customer-support':
+        return <CustomerSupport />
       case 'events':
         return (
           <div className="flex-1 overflow-y-auto">

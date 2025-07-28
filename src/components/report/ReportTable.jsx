@@ -56,66 +56,77 @@ const ReportTable = ({ searchTerm, activeTab }) => {
   // Sample booking transaction data - different structure
   const bookingData = [
     {
-      billingId: 'BIL-001',
-      date: '2024-01-15',
-      subscription: 'Premium',
-      type: 'Buyer',
-      daysLeft: '25 days',
-      revenue: '$299'
+      date: '09/25/24 - 18:45',
+      transaction: 'Premium Plan Subscription',
+      method: { brand: 'Mastercard', last4: '4756', exp: '04/24' },
+      amount: '- $299.00',
+      status: 'In-Progress',
     },
     {
-      billingId: 'BIL-002',
-      date: '2024-01-14',
-      subscription: 'Standard',
-      type: 'Buyer',
-      daysLeft: '12 days',
-      revenue: '$99'
+      date: '09/25/24 - 12:23',
+      transaction: 'Vendor Payment Received',
+      method: { brand: 'Visa', last4: '5345', exp: '04/26' },
+      amount: '+ $1,784.00',
+      status: 'Completed',
     },
     {
-      billingId: 'BIL-003',
-      date: '2024-01-13',
-      subscription: 'Ultra',
-      type: 'Buyer',
-      daysLeft: '12 days',
-      revenue: '$599'
+      date: '09/24/24 - 11:42',
+      transaction: 'Standard Plan Subscription',
+      method: { brand: 'Visa', last4: '5345', exp: '04/26' },
+      amount: '- $99.00',
+      status: 'Completed',
     },
     {
-      billingId: 'BIL-004',
-      date: '2024-01-12',
-      subscription: 'Standard',
-      type: 'Buyer',
-      daysLeft: '8 days',
-      revenue: '$199'
+      date: '09/24/24 - 15:24',
+      transaction: 'Booking Payment',
+      method: { brand: 'Mastercard', last4: '4756', exp: '04/24' },
+      amount: '- $599.00',
+      status: 'Completed',
     },
     {
-      billingId: 'BIL-005',
-      date: '2024-01-11',
-      subscription: 'Premium',
-      type: 'Seller',
-      daysLeft: '33 days',
-      revenue: '$299'
+      date: '09/23/24 - 08:34',
+      transaction: 'Refund Issued',
+      method: { brand: 'Visa', last4: '5345', exp: '04/26' },
+      amount: '- $206.34',
+      status: 'Completed',
     },
     {
-      billingId: 'BIL-006',
-      date: '2024-01-10',
-      subscription: 'Ultra',
-      type: 'Buyer',
-      daysLeft: '10 days',
-      revenue: '$99'
-    }
+      date: '09/23/24 - 11:52',
+      transaction: 'Vendor Service Fee',
+      method: { brand: 'Visa', last4: '5345', exp: '04/26' },
+      amount: '- $97.00',
+      status: 'Completed',
+    },
+    {
+      date: '09/22/24 - 12:35',
+      transaction: 'Booking Payment',
+      method: { brand: 'Visa', last4: '5345', exp: '04/26' },
+      amount: '- $1,784.00',
+      status: 'Completed',
+    },
+    {
+      date: '09/22/24 - 10:23',
+      transaction: 'Wallet Top-up',
+      method: { brand: 'Visa', last4: '5345', exp: '04/26' },
+      amount: '+ $1,000.00',
+      status: 'Completed',
+    },
   ];
 
   const currentData = activeTab === 'vendor' ? vendorData : bookingData;
 
   // Filter data based on search term
   const filteredData = currentData.filter(item => {
-    const searchFields = activeTab === 'vendor' 
-      ? [item.id, item.vendor, item.date]
-      : [item.billingId, item.subscription, item.type, item.date];
-    
-    return searchFields.some(field => 
-      field.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    if (activeTab === 'vendor') {
+      return [item.id, item.vendor, item.date].some(field =>
+        field.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    } else {
+      return [item.date, item.transaction, item.method?.brand, item.amount, item.status]
+        .some(field =>
+          String(field).toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }
   });
 
   const getSubscriptionColor = (subscription) => {
@@ -168,24 +179,11 @@ const ReportTable = ({ searchTerm, activeTab }) => {
                 </>
               ) : (
                 <>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Billing ID
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Subscription
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Type
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Days Left
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Revenue
-                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 </>
               )}
             </tr>
@@ -227,34 +225,36 @@ const ReportTable = ({ searchTerm, activeTab }) => {
                 ) : (
                   <>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
-                        {item.billingId}
+                      <div className="text-sm text-gray-500">{item.date}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{item.transaction}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        {item.method?.brand === 'Visa' && (
+                          <img src="/assets/Visa.svg" alt="Visa" className="h-8 w-8" />
+                        )}
+                        {item.method?.brand === 'Mastercard' && (
+                          <img src="/assets/Paypal.svg" alt="Mastercard" className="h-8 w-8 " />
+                        )}
+                        <span className="text-xs text-gray-700 font-medium">•••• {item.method?.last4}</span>
+                        <span className="text-xs text-gray-400">Exp {item.method?.exp}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500">
-                        {item.date}
-                      </div>
+                      <div className="text-sm font-medium text-gray-900">{item.amount}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getSubscriptionColor(item.subscription)}`}>
-                        {item.subscription}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(item.type)}`}>
-                        {item.type}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {item.daysLeft}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
-                        {item.revenue}
-                      </div>
+                      {item.status === 'Completed' ? (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          ● Completed
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          ● In-Progress
+                        </span>
+                      )}
                     </td>
                   </>
                 )}
@@ -306,28 +306,37 @@ const ReportTable = ({ searchTerm, activeTab }) => {
               ) : (
                 <>
                   <div className="flex justify-between mb-2">
-                    <span className="text-xs text-gray-500">Billing ID</span>
-                    <span className="text-sm font-medium text-gray-900">{item.billingId}</span>
-                  </div>
-                  <div className="flex justify-between mb-2">
                     <span className="text-xs text-gray-500">Date</span>
                     <span className="text-sm text-gray-500">{item.date}</span>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-xs text-gray-500">Subscription</span>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getSubscriptionColor(item.subscription)}`}>{item.subscription}</span>
+                    <span className="text-xs text-gray-500">Transaction</span>
+                    <span className="text-sm text-gray-900">{item.transaction}</span>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-xs text-gray-500">Type</span>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(item.type)}`}>{item.type}</span>
+                    <span className="text-xs text-gray-500">Method</span>
+                    <span className="flex items-center gap-2">
+                      {item.method?.brand === 'Visa' && (
+                        <img src="/assets/Cart.svg" alt="Visa" className="h-5 w-5" />
+                      )}
+                      {item.method?.brand === 'Mastercard' && (
+                        <img src="/assets/CartPink.svg" alt="Mastercard" className="h-5 w-5" />
+                      )}
+                      <span className="text-xs text-gray-700 font-medium">•••• {item.method?.last4}</span>
+                      <span className="text-xs text-gray-400">Exp {item.method?.exp}</span>
+                    </span>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-xs text-gray-500">Days Left</span>
-                    <span className="text-sm text-gray-900">{item.daysLeft}</span>
+                    <span className="text-xs text-gray-500">Amount</span>
+                    <span className="text-sm font-medium text-gray-900">{item.amount}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-xs text-gray-500">Revenue</span>
-                    <span className="text-sm font-medium text-gray-900">{item.revenue}</span>
+                    <span className="text-xs text-gray-500">Status</span>
+                    {item.status === 'Completed' ? (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">● Completed</span>
+                    ) : (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">● In-Progress</span>
+                    )}
                   </div>
                 </>
               )}

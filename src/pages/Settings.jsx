@@ -1,5 +1,7 @@
+// ...existing code...
 import React, { useState } from 'react';
 import DashboardHeader from '../components/common/DashboardHeader';
+
 
 function NotificationToggle({ label, desc, defaultChecked }) {
   const [checked, setChecked] = useState(!!defaultChecked);
@@ -27,7 +29,9 @@ function NotificationToggle({ label, desc, defaultChecked }) {
 const tabList = [
   { label: 'Security Details', value: 'security' },
   { label: 'Notification Details', value: 'notification' },
+  { label: 'Platform Fee Details', value: 'platform-fee' },
 ];
+// ...existing code...
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('security');
@@ -140,6 +144,37 @@ const Settings = () => {
                 <button className="mt-10 bg-gradient-brand text-white px-10 py-2 rounded-xl font-semibold shadow-md">
                   Save Notification Setting
                 </button>
+              </div>
+            </div>
+          )}
+          {activeTab === 'platform-fee' && (
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              {/* Section 1: Booking Item Fees */}
+              <div className="mb-10">
+                <h3 className="text-xl font-bold text-black mb-2">Booking Item Platform Fee</h3>
+                <label className="block text-black font-medium mb-2 mt-4">Percentage fee applied on all event/service booking items</label>
+                <input
+                  type="number"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400 text-base"
+                  placeholder="e.g., 10"
+                  min="0"
+                  max="100"
+                />
+                <div className="text-gray-400 text-sm mt-2">
+                  This percentage will be deducted from every booking transaction before payout to vendor.
+                </div>
+              </div>
+              {/* Section 2: Sales Fees */}
+              <div className="mb-4">
+                <h3 className="text-xl font-bold text-black mb-2">Sales Items Platform Fee</h3>
+                <label className="block text-black font-medium mb-2 mt-4">Percentage fee applied on all  sales items purchase</label>
+                <input
+                  type="number"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400 text-base"
+                  placeholder="e.g., 8"
+                  min="0"
+                  max="100"
+                />
               </div>
             </div>
           )}

@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Calendar from 'react-calendar';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday } from 'date-fns';
 import DashboardHeader from '../components/common/DashboardHeader';
 import BookingStatsCards from '../components/booking/BookingStatsCards';
 import BookingCalendar from '../components/booking/BookingCalendar';
@@ -12,6 +10,7 @@ const BookingAnalytics = () => {
   const [viewType, setViewType] = useState('By Month'); // Default to monthly view
   const [selectedVendor, setSelectedVendor] = useState(''); // No vendor selected by default
   const [filterDate, setFilterDate] = useState('');
+  const [activeTab, setActiveTab] = useState('booking');
 
  
   const getBookingData = (viewType, vendorFilter) => {
@@ -274,6 +273,40 @@ const BookingAnalytics = () => {
           
           {/* All Bookings Section */}
           <div className="mt-8">
+            {/* Tabs Section */}
+            <div className="mb-6 flex justify-center">
+              <div className="relative flex bg-gray-100 p-1 rounded-xl w-full max-w-6xl">
+                {/* Sliding background indicator */}
+                <div 
+                  className={`absolute top-1 bottom-1 bg-gradient-brand rounded-2xl shadow-sm transition-all duration-300 ease-in-out ${
+                    activeTab === 'booking' 
+                      ? 'left-1 right-1/2 mr-0.5' 
+                      : 'left-1/2 right-1 ml-0.5'
+                  }`}
+                />
+                <button
+                  onClick={() => setActiveTab('booking')}
+                  className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-base font-medium transition-all duration-300 ${
+                    activeTab === 'booking'
+                      ? 'text-white'
+                      : 'text-black font-bold hover:text-gray-900'
+                  }`}
+                >
+                  Booking Items
+                </button>
+                <button
+                  onClick={() => setActiveTab('sales')}
+                  className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-base font-medium transition-all duration-300 ${
+                    activeTab === 'sales'
+                      ? 'text-white'
+                      : 'text-black font-bold hover:text-gray-900'
+                  }`}
+                >
+                  Sale Items
+                </button>
+              </div>
+            </div>
+
             {/* Filters */}
             <BookingFilters 
               filterDate={filterDate}
@@ -283,7 +316,7 @@ const BookingAnalytics = () => {
               viewType={viewType}
               setViewType={setViewType}
             />
-            
+
             {/* Calendar */}
             <BookingCalendar 
               selectedDate={selectedDate}

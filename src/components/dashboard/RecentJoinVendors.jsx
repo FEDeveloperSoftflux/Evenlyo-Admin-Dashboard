@@ -1,7 +1,7 @@
 import React from 'react';
 
-const RecentJoinVendors = () => {
-  const vendors = [
+const RecentJoinVendors = ({ activeTab }) => {
+  const bookingVendors = [
     {
       id: 1,
       name: 'Digital Agency Pro',
@@ -30,11 +30,43 @@ const RecentJoinVendors = () => {
       avatar: 'EM'
     }
   ];
+  const salesVendors = [
+    {
+      id: 1,
+      name: 'Sales Pro Inc.',
+      type: 'Active',
+      typeColor: 'bg-green-100 text-green-800',
+      category: 'Retail',
+      date: '10 Jun 2025',
+      avatar: 'SP'
+    },
+    {
+      id: 2,
+      name: 'Wholesale Mart',
+      type: 'Pending',
+      typeColor: 'bg-yellow-100 text-yellow-800',
+      category: 'Wholesale',
+      date: '09 Jun 2025',
+      avatar: 'WM'
+    },
+    {
+      id: 3,
+      name: 'Quick Supplies',
+      type: 'Active',
+      typeColor: 'bg-green-100 text-green-800',
+      category: 'Supplies',
+      date: '08 Jun 2025',
+      avatar: 'QS'
+    }
+  ];
+  const vendors = activeTab === 'sales' ? salesVendors : bookingVendors;
 
   return (
     <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
       <div className="flex items-center justify-between mb-4 gap-2">
-        <h3 className="text-lg font-bold text-black">Recent Join Vendors</h3>
+        <h3 className="text-lg font-bold text-black">
+          {activeTab === 'sales' ? 'Recent Join Sales Vendors' : 'Recent Join Vendors'}
+        </h3>
         <button className="text-sm text-gradient font-medium flex items-center underline">
           View All
           {/* Icon can be added here if needed */}

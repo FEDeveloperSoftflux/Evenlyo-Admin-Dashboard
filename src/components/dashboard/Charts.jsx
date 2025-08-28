@@ -9,9 +9,9 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
-const Charts = () => {
-  // Sample data for yearly earnings overview matching the image
-  const chartData = [
+const Charts = ({ activeTab }) => {
+  // Sample data for booking and sales
+  const bookingData = [
     { month: 'Jan', value: 310 },
     { month: 'Feb', value: 250 },
     { month: 'Mar', value: 350 },
@@ -19,13 +19,26 @@ const Charts = () => {
     { month: 'May', value: 400 },
     { month: 'Jun', value: 500 },
   ];
+  const salesData = [
+    { month: 'Jan', value: 210 },
+    { month: 'Feb', value: 180 },
+    { month: 'Mar', value: 320 },
+    { month: 'Apr', value: 390 },
+    { month: 'May', value: 420 },
+    { month: 'Jun', value: 600 },
+  ];
+  const chartData = activeTab === 'sales' ? salesData : bookingData;
 
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
       <div className="flex items-left justify-between mb-6">
         <div>
-          <h3 className="text-lg font-bold text-black mb-1">Yearly Earnings Overview</h3>
-          <p className="text-sm text-gray-500">$5000</p>
+          <h3 className="text-lg font-bold text-black mb-1">
+            {activeTab === 'sales' ? 'Yearly Sales Overview' : 'Yearly Bookings Overview'}
+          </h3>
+          <p className="text-sm text-gray-500">
+            {activeTab === 'sales' ? '$7000' : '$5000'}
+          </p>
         </div>
       </div>
 

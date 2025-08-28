@@ -124,6 +124,7 @@ const Tracking = () => {
   const trackingData = [
  {
    id: 'TRK001',
+   evenlyoProtection: true,
    trackingId: 'TRK001',
    orderId: 'ORD-2024-001',
    clientName: 'John Smith',
@@ -204,6 +205,7 @@ const Tracking = () => {
  },
  {
    id: 'TRK002',
+   evenlyoProtection: false,
    trackingId: 'TRK002',
    orderId: 'ORD-2024-002',
    clientName: 'Sarah Johnson',
@@ -275,6 +277,7 @@ const Tracking = () => {
  },
  {
    id: 'TRK003',
+   evenlyoProtection: true,
    trackingId: 'TRK003',
    orderId: 'ORD-2024-003',
    clientName: 'Michael Brown',
@@ -346,6 +349,7 @@ const Tracking = () => {
  },
  {
    id: 'TRK004',
+   evenlyoProtection: false,
    trackingId: 'TRK004',
    orderId: 'ORD-2024-004',
    clientName: 'Emily Davis',
@@ -417,6 +421,7 @@ const Tracking = () => {
  },
  {
    id: 'TRK005',
+   evenlyoProtection: false,
    trackingId: 'TRK005',
    orderId: 'ORD-2024-005',
    clientName: 'David Wilson',
@@ -461,6 +466,7 @@ const Tracking = () => {
  },
  {
    id: 'TRK006',
+   evenlyoProtection: true,
    trackingId: 'TRK006',
    orderId: 'ORD-2024-006',
    clientName: 'Lisa Anderson',
@@ -927,7 +933,12 @@ const Tracking = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {trackingData.map((order) => (
                     <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-black">{order.trackingId}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-black">
+                        {order.trackingId}
+                        {order.evenlyoProtection && (
+                          <img src="/assets/Shield.svg" alt="Evenlyo Protection" className="inline w-4 h-4 ml-1 align-middle" title="Evenlyo Protection Enabled" />
+                        )}
+                      </td>
                       <td className="px-5 py-4 whitespace-nowrap text-sm font-semibold text-black">
                         <div>
                           <div>{order.dateTime}</div>
@@ -995,6 +1006,9 @@ const Tracking = () => {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-semibold text-black px-2 py-1 rounded-lg">{order.trackingId}</span>
+                      {order.evenlyoProtection && (
+                        <img src="/assets/Shield.svg" alt="Evenlyo Protection" className="inline w-4 h-4 ml-1 align-middle" title="Evenlyo Protection Enabled" />
+                      )}
                       <span className={`text-xs font-medium rounded-full px-2 py-1 ml-2 ${order.statusColor}`}>{order.status}</span>
                     </div>
                     <div className="text-xs text-gray-400">{order.dateTime} {order.time}</div>

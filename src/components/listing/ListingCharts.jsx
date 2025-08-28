@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, ResponsiveContainer, Cell, XAxis, YAxis, Tooltip } from 'recharts';
 
-const ListingCharts = () => {
+const ListingCharts = ({ activeTab }) => {
   // Responsive margin for BarChart
   const [leftMargin, setLeftMargin] = React.useState(10);
   const [xAxisKey, setXAxisKey] = React.useState('name');
@@ -19,13 +19,21 @@ const ListingCharts = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  const chartData = [
+  const bookingData = [
     { name: 'Food & Drinks', shortName: 'Food', value: 400, color: 'url(#gradient)' },
     { name: 'Decoration & Styling', shortName: 'Decor', value: 1400, color: 'url(#gradient)' },
     { name: 'Locations & Party Tents', shortName: 'Location', value: 1100, color: 'url(#gradient)' },
     { name: 'Decoration & Styling', shortName: 'Decor', value: 1600, color: 'url(#gradient)' },
     { name: 'Staff & Services', shortName: 'Staff', value: 550, color: 'url(#gradient)' },
   ];
+  const salesData = [
+    { name: 'Electronics', shortName: 'Electro', value: 1200, color: 'url(#gradient)' },
+    { name: 'Fashion', shortName: 'Fashion', value: 900, color: 'url(#gradient)' },
+    { name: 'Home Appliances', shortName: 'Home', value: 700, color: 'url(#gradient)' },
+    { name: 'Books', shortName: 'Books', value: 400, color: 'url(#gradient)' },
+    { name: 'Toys', shortName: 'Toys', value: 300, color: 'url(#gradient)' },
+  ];
+  const chartData = activeTab === 'vendors' ? salesData : bookingData;
 
   // Custom X-axis tick component to handle multiline text
   const CustomXAxisTick = (props) => {
@@ -55,7 +63,9 @@ const ListingCharts = () => {
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-bold text-black">Mostly book items</h3>
+        <h3 className="text-lg font-bold text-black">
+          {activeTab === 'vendors' ? 'Mostly sold items' : 'Mostly book items'}
+        </h3>
         <span className="text-sm text-gray-500">1 Month</span>
       </div>
 

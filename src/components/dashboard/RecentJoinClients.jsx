@@ -1,7 +1,7 @@
 import React from 'react';
 
-const RecentJoinClients = () => {
-  const clients = [
+const RecentJoinClients = ({ activeTab }) => {
+  const bookingClients = [
     {
       id: 1,
       name: 'Emma Thompson',
@@ -30,11 +30,43 @@ const RecentJoinClients = () => {
       avatar: 'LG'
     }
   ];
+  const salesClients = [
+    {
+      id: 1,
+      name: 'Michael Scott',
+      type: 'Active',
+      typeColor: 'bg-green-100 text-green-800',
+      plan: 'Sales Pro',
+      date: '10 Jun 2025',
+      avatar: 'MS'
+    },
+    {
+      id: 2,
+      name: 'Pam Beesly',
+      type: 'Active',
+      typeColor: 'bg-green-100 text-green-800',
+      plan: 'Sales Basic',
+      date: '09 Jun 2025',
+      avatar: 'PB'
+    },
+    {
+      id: 3,
+      name: 'Jim Halpert',
+      type: 'Active',
+      typeColor: 'bg-green-100 text-green-800',
+      plan: 'Sales Pro',
+      date: '08 Jun 2025',
+      avatar: 'JH'
+    }
+  ];
+  const clients = activeTab === 'sales' ? salesClients : bookingClients;
 
   return (
     <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
       <div className="flex items-center justify-between mb-4 gap-2">
-        <h3 className="text-lg font-bold text-black">Recent Join Clients</h3>
+        <h3 className="text-lg font-bold text-black">
+          {activeTab === 'sales' ? 'Recent Join Sales Clients' : 'Recent Join Clients'}
+        </h3>
         <button className="text-sm text-gradient font-medium flex items-center underline">
           View All
           {/* Icon can be added here if needed */}

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const ListingTable = ({ searchTerm, onViewSubcategories }) => {
-  const categories = [
+const ListingTable = ({ searchTerm, onViewSubcategories, activeTab }) => {
+  const bookingCategories = [
     {
       id: 'entertainment',
       name: 'Entertainment & Attractions',
@@ -43,6 +43,49 @@ const ListingTable = ({ searchTerm, onViewSubcategories }) => {
       bgColor: 'bg-pink-50'
     }
   ];
+  const salesCategories = [
+    {
+      id: 'electronics',
+      name: 'Electronics',
+      icon: '/assets/Box.svg',
+      description: 'Latest gadgets and devices',
+      subcategories: ['Mobiles', 'Laptops', 'Cameras'],
+      bgColor: 'bg-blue-50'
+    },
+    {
+      id: 'fashion',
+      name: 'Fashion',
+      icon: '/assets/CartPink.svg',
+      description: 'Trending clothes and accessories',
+      subcategories: ['Men', 'Women', 'Kids'],
+      bgColor: 'bg-pink-50'
+    },
+    {
+      id: 'home',
+      name: 'Home Appliances',
+      icon: '/assets/Chandelier.svg',
+      description: 'Appliances for your home',
+      subcategories: ['Kitchen', 'Living Room', 'Bedroom'],
+      bgColor: 'bg-yellow-50'
+    },
+    {
+      id: 'books',
+      name: 'Books',
+      icon: '/assets/Book.svg',
+      description: 'Books and magazines',
+      subcategories: ['Fiction', 'Non-fiction', 'Comics'],
+      bgColor: 'bg-green-50'
+    },
+    {
+      id: 'toys',
+      name: 'Toys',
+      icon: '/assets/Table.svg',
+      description: 'Toys and games for kids',
+      subcategories: ['Educational', 'Action Figures', 'Puzzles'],
+      bgColor: 'bg-purple-50'
+    }
+  ];
+  const categories = activeTab === 'vendors' ? salesCategories : bookingCategories;
 
   const handleViewSubcategories = (category) => {
     // This will be handled by the parent component to navigate to subcategory page
@@ -109,17 +152,8 @@ const ListingTable = ({ searchTerm, onViewSubcategories }) => {
                 {/* Actions */}
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center space-x-2">
-                    {/* Edit Button */}
-                    <button className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors">
-                      <img src="/assets/Edit.svg" alt="Edit" className="w-4 h-4" />
-                    </button>
-
-                    {/* Delete Button */}
-                    <button className="p-1.5 text-gray-400 hover:text-red-600 transition-colors">
-                      <img src="/assets/Delete.svg" alt="Delete" className="w-4 h-4" />
-                    </button>
-
-                    {/* View Subcategories Button */}
+                    {/* View Details and View Subcategories Button */}
+                    <span className="text-sm text-gray-700">View details</span>
                     <button 
                       onClick={() => handleViewSubcategories(category)}
                       className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors"

@@ -117,6 +117,49 @@ const ReportManagement = () => {
           {/* Stats Cards Section */}
           <ReportStatsCards />
 
+          {/* Tabs Section */}
+          <div className="mt-8 mb-6 flex justify-center">
+            <div className="relative flex bg-gray-100 p-1 rounded-xl w-full max-w-6xl">
+              {/* Sliding background indicator */}
+              <div 
+                className={`absolute top-1 bottom-1 bg-gradient-brand rounded-2xl shadow-sm transition-all duration-300 ease-in-out ${
+                  activeTab === 'clients' 
+                    ? 'left-1 right-1/2 mr-0.5' 
+                    : 'left-1/2 right-1 ml-0.5'
+                }`}
+              />
+              <button
+                onClick={() => setActiveTab('clients')}
+                className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-base font-medium transition-all duration-300 ${
+                  activeTab === 'clients'
+                    ? 'text-white'
+                    : 'text-black font-bold hover:text-gray-900'
+                }`}
+              >
+                Booking Items
+              </button>
+              <button
+                onClick={() => setActiveTab('vendors')}
+                className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-base font-medium transition-all duration-300 ${
+                  activeTab === 'vendors'
+                    ? 'text-white'
+                    : 'text-black font-bold hover:text-gray-900'
+                }`}
+              >
+                Sale Items
+              </button>
+            </div>
+          </div>
+
+          {/* Charts Section */}
+          <section className="mb-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <ReportChart activeTab={activeTab} />
+              {/* Subscription Plans Distribution */}
+              <ReportPieChart activeTab={activeTab} />
+            </div>
+          </section>
+
           {/* Date Filter Section */}
           <div className="mb-8 relative" style={{ overflow: 'visible' }}>
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4" style={{ overflow: 'visible' }}>
@@ -342,49 +385,6 @@ const ReportManagement = () => {
             </div>
           </div>
 
-          {/* Charts Section */}
-          <section className="mb-5">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ReportChart />
-              
-              {/* Subscription Plans Distribution */}
-              <ReportPieChart />
-            </div>
-          </section>
-
-          {/* Tab Switch Buttons */}
-          <div className="mb-6 flex justify-center">
-            <div className="relative flex bg-gray-100 p-1 rounded-xl w-full max-w-6xl">
-              {/* Sliding background indicator */}
-              <div 
-                className={`absolute top-1 bottom-1 bg-gradient-brand rounded-2xl shadow-sm transition-all duration-300 ease-in-out ${
-                  activeTab === 'vendor' 
-                    ? 'left-1 right-1/2 mr-0.5' 
-                    : 'left-1/2 right-1 ml-0.5'
-                }`}
-              />
-              <button
-                onClick={() => setActiveTab('vendor')}
-                className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-xs sm:text-lg font-medium transition-all duration-300 ${
-                  activeTab === 'vendor'
-                    ? 'text-white'
-                    : 'text-black font-bold hover:text-gray-900'
-                }`}
-              >
-                Seller Reports
-              </button>
-              <button
-                onClick={() => setActiveTab('client')}
-                className={`relative z-10 flex-1 px-8 py-2 rounded-2xl text-xs sm:text-lg font-medium transition-all duration-300 ${
-                  activeTab === 'client'
-                    ? 'text-white'
-                    : 'text-black font-bold hover:text-gray-900'
-                }`}
-              >
-                All Booking transactions
-              </button>
-            </div>
-          </div>
 
           {/* Search Section */}
           <div className="mb-6">

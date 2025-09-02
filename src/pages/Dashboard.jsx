@@ -70,12 +70,10 @@ const Dashboard = () => {
             {activeTab === 'booking' ? (
               <div>
                 {/* Booking Items details go here */}
-                <p className="text-center text-gray-600">Booking Items details...</p>
               </div>
             ) : (
               <div>
                 {/* Sale Items details go here */}
-                <p className="text-center text-gray-600">Sale Items details...</p>
               </div>
             )}
           </div>
@@ -91,8 +89,8 @@ const Dashboard = () => {
           {/* Recent Join Sections */}
           <section className="mb-responsive">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <RecentJoinVendors activeTab={activeTab} />
-              <RecentJoinClients activeTab={activeTab} />
+              <RecentJoinVendors  />
+              <RecentJoinClients  />
             </div>
           </section>
         </main>

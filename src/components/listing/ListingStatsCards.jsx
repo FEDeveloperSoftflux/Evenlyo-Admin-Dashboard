@@ -34,21 +34,11 @@ const ListingStatsCards = () => {
       textColor: 'text-gray-900',
       icon: '/assets/CartPink.svg',
     }
-
-    },
-    {
-      title: 'Total Sale Items',
-      value: '120',
-      change: 'Items sold this month',
-      bgColor: 'bg-white',
-      textColor: 'text-gray-900',
-      icon: '/assets/TrendUp.svg',
-    }
   ];
+
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {statsCards.map((card, index) => (
         <div
           key={index}
@@ -60,8 +50,7 @@ const ListingStatsCards = () => {
               <p className={`text-sm font-bold ${card.textColor === 'text-white' ? 'text-white/80' : 'text-black'}`}>
                 {card.title}
               </p>
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 ${card.textColor === 'text-white' ? 'bg-white/20' : 'bg-white'
-                }`}>
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 ${card.textColor === 'text-white' ? 'bg-white/20' : 'bg-white'}`}>
                 <img src={card.icon} alt="" className="w-8 h-8" />
               </div>
             </div>
@@ -79,7 +68,8 @@ const ListingStatsCards = () => {
         </div>
       ))}
     </div>
+
   );
-};
+}
 
 export default ListingStatsCards;

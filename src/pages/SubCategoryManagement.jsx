@@ -442,7 +442,7 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
                   <input
                     type="checkbox"
                     id="escrow-payment"
-                    className="mr-2"
+                    className="mr-2 custom-checkbox"
                     checked={formData.escrowPayment || false}
                     onChange={e => setFormData(prev => ({ ...prev, escrowPayment: e.target.checked }))}
                   />
@@ -465,7 +465,7 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
                       />
                     </div>
                     <div className="text-xs text-gray-500 mb-2">
-                      Remaining % (example 70%) payment will be taken before the event. Client will receive a reminder to pay timely when event is 3 or More Days Away. If Event is Less Than 3 Days Away Full payment will be taken upfront from client while booking.
+                      Remaining {100 - Number(formData.upfrontPercentage) }% payment will be taken before the event. Client will receive a reminder to pay timely when event is 3 or More Days Away. If Event is Less Than 3 Days Away Full payment will be taken upfront from client while booking.
                     </div>
                   </div>
                 )}
@@ -496,7 +496,7 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
                   <input
                     type="checkbox"
                     id="evenlyno-protect"
-                    className="mr-2"
+                    className="mr-2 custom-checkbox"
                     checked={formData.evenlynoProtect || false}
                     onChange={e => setFormData(prev => ({ ...prev, evenlynoProtect: e.target.checked }))}
                   />

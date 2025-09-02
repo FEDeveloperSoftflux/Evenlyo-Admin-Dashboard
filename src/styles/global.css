@@ -1,3 +1,4 @@
+
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap");
 @import "./design-system.css";
 @tailwind base;
@@ -509,4 +510,36 @@ select {
 
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e5e7eb;
+}
+
+/* Custom Pink Checkbox */
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: solid #424242; /* Tailwind pink-400 */
+  border-width: 1px;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.custom-checkbox:checked {
+  background: #ffe4ed; /* Tailwind pink-100 */
+  border-color: #e31b95; /* Tailwind brand pink */
+}
+
+.custom-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #e31b95;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
 }

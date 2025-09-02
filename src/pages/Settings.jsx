@@ -148,7 +148,7 @@ const Settings = () => {
             </div>
           )}
           {activeTab === 'platform-fee' && (
-            <div className="bg-white p-6 rounded-xl shadow-md">
+            <div className="bg-white p-6 rounded-xl shadow-md relative">
               {/* Section 1: Booking Item Fees */}
               <div className="mb-10">
                 <h3 className="text-xl font-bold text-black mb-2">Booking Item Platform Fee</h3>
@@ -175,6 +175,15 @@ const Settings = () => {
                   min="0"
                   max="100"
                 />
+              </div>
+              {/* Save Button Bottom Right */}
+              <div className="flex justify-end mt-8">
+                <button
+                  className="bg-gradient-brand text-white px-8 py-2 rounded-xl font-semibold shadow hover:opacity-90 transition-opacity"
+                  type="button"
+                >
+                  Save Fee Details
+                </button>
               </div>
             </div>
           )}

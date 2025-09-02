@@ -25,11 +25,19 @@ const ListingStatsCards = () => {
       bgColor: 'bg-white',
       textColor: 'text-gray-900',
       icon: '/assets/CartPink.svg',
+    },
+    {
+      title: 'Total Sale Items',
+      value: '120',
+      change: 'Items sold this month',
+      bgColor: 'bg-white',
+      textColor: 'text-gray-900',
+      icon: '/assets/TrendUp.svg',
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {statsCards.map((card, index) => (
         <div 
           key={index} 

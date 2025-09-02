@@ -144,9 +144,12 @@ const ListingTable = ({ searchTerm, onViewSubcategories, activeTab }) => {
 
                 {/* Sub Categories */}
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <button onClick={() => handleViewSubcategories(category)}>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                     {category.subcategories.length}
                   </span>
+                  </button>
+
                 </td>
 
                 {/* Actions */}

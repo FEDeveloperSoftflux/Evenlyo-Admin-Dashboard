@@ -436,6 +436,90 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
                 />
               </div>
 
+              {/* Escrow Payment and Payment Rules Section */}
+              <div className="mb-6 border border-gray-100 rounded-xl p-4 bg-gray-50">
+                <div className="flex items-center mb-2">
+                  <input
+                    type="checkbox"
+                    id="escrow-payment"
+                    className="mr-2"
+                    checked={formData.escrowPayment || false}
+                    onChange={e => setFormData(prev => ({ ...prev, escrowPayment: e.target.checked }))}
+                  />
+                  <label htmlFor="escrow-payment" className="text-sm font-medium text-gray-700">Escrow Payment</label>
+                </div>
+                {(formData.escrowPayment || formData.paymentRules) && (
+                  <div className="mt-4">
+                    <h3 className="text-md font-semibold mb-2">Escrow Payment Rules</h3>
+                    <div className="mb-3">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Upfront Payment Percentage client must pay for booking confirmation</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        name="upfrontPercentage"
+                        value={formData.upfrontPercentage || ''}
+                        onChange={e => setFormData(prev => ({ ...prev, upfrontPercentage: e.target.value }))}
+                        className="w-40 px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm"
+                        placeholder="%"
+                      />
+                    </div>
+                    <div className="text-xs text-gray-500 mb-2">
+                      Remaining % (example 70%) payment will be taken before the event. Client will receive a reminder to pay timely when event is 3 or More Days Away. If Event is Less Than 3 Days Away Full payment will be taken upfront from client while booking.
+                    </div>
+                  </div>
+                )}
+                                {/* Vendor Payout Rules */}
+                {formData.escrowPayment && (
+                  <div className="mt-6">
+                    <h3 className="text-md font-semibold mb-2">Vendor Payout (Escrow Release Timing)</h3>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Enter the number of hours after event completion when payout should be released to vendor?</label>
+                    <div className="flex items-center gap-2 mb-2">
+                      <input
+                        type="number"
+                        min="0"
+                        name="vendorPayoutHours"
+                        value={formData.vendorPayoutHours || ''}
+                        onChange={e => setFormData(prev => ({ ...prev, vendorPayoutHours: e.target.value }))}
+                        className="w-32 px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm"
+                        placeholder="Hours"
+                      />
+                      <span className="text-xs text-gray-500">Hours</span>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2">
+                      Please review all settings before saving. These rules will be applied automatically to this subcategory.
+                    </div>
+                  </div>
+                )}
+                {/* Enable Advance Evenlyno Protect */}
+                <div className="flex items-center mt-4">
+                  <input
+                    type="checkbox"
+                    id="evenlyno-protect"
+                    className="mr-2"
+                    checked={formData.evenlynoProtect || false}
+                    onChange={e => setFormData(prev => ({ ...prev, evenlynoProtect: e.target.checked }))}
+                  />
+                  <label htmlFor="evenlyno-protect" className="text-sm font-medium text-gray-700">Enable Advance Evenlyno Protect</label>
+                </div>
+                {formData.evenlynoProtect && (
+                  <div className="mt-3">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Additional percentage charged for this feature that client has to pay for more security.</label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      name="evenlynoProtectPercentage"
+                      value={formData.evenlynoProtectPercentage || ''}
+                      onChange={e => setFormData(prev => ({ ...prev, evenlynoProtectPercentage: e.target.value }))}
+                      className="w-40 px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-sm"
+                      placeholder="%"
+                    />
+                  </div>
+                )}
+
+              </div>
+
               {/* Modal Footer */}
               <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
                 <button

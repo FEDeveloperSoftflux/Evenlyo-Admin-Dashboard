@@ -6,6 +6,7 @@ import TrackOrderModal from '../components/tracking/TrackOrderModal';
 import '../styles/design-system.css';
 
 const Tracking = () => {
+  const [activeTab, setActiveTab] = useState('bookingItems');
   const [selectedFilters, setSelectedFilters] = useState({
     itemName: '',
     mainCategory: 'Main Category',
@@ -13,7 +14,7 @@ const Tracking = () => {
     vendor: 'All Vendors',
     date: ''
   });
-  
+
   const [openMainCategoryDropdown, setOpenMainCategoryDropdown] = useState(false);
   const [openSubCategoryDropdown, setOpenSubCategoryDropdown] = useState(false);
   const [openVendorDropdown, setOpenVendorDropdown] = useState(false);
@@ -57,7 +58,7 @@ const Tracking = () => {
 
   const mainCategories = [
     'Entertainment & Attractions',
-    'Food & Drinks', 
+    'Food & Drinks',
     'Decoration & Styling',
     'Locations & Party Tents',
     'Staff & Services'
@@ -120,423 +121,558 @@ const Tracking = () => {
     'Luxury Events'
   ];
 
-  // Mock data for tracking orders
-  const trackingData = [
- {
-   id: 'TRK001',
-   evenlyoProtection: true,
-   trackingId: 'TRK001',
-   orderId: 'ORD-2024-001',
-   clientName: 'John Smith',
-   phone: '+1 (555) 123-4567',
-   dateTime: '2024-06-27',
-   time: '10:30',
-   buyer: {
-     name: 'John Smith',
-     avatar: '/assets/jaydeep.png'
-   },
-   seller: {
-     name: 'Tech Store',  
-     avatar: '/assets/Vendor1.png'
-   },
-   itemList: 'DJ Equipment, Sound System',
-   destination: '456 Business Ave, Commerce City',
-   status: 'Delivered',
-   statusColor: 'text-yellow-600 bg-yellow-50',
-   statusLabel: 'Delivered',
-   totalPrice: '$2,450.00',
-   progressNote: 'Order delivered to destination',
-   timeline: [
-     {
-       title: 'Request Sent',
-       description: 'Client sent order request',
-       completed: true,
-       icon: '/assets/Sent.svg',
-       label: 'Client',
-       labelColor: 'bg-pink-100 text-pink-600',
-       date: '2024-06-25 09:00 AM'
-     },
-     {
-       title: 'Order Accepted',
-       description: 'Vendor accepted the order',
-       completed: true,
-       icon: '/assets/Accepted.svg',
-       label: 'Confirmed',
-       labelColor: 'bg-orange-100 text-orange-600',
-       date: '2024-06-25 09:00 AM'
-     },
-     {
-       title: 'Picked Up',
-       description: 'Order picked up from location',
-       completed: true,
-       icon: '/assets/Pickup.svg',
-       label: 'Driver',
-       labelColor: 'bg-green-100 text-green-600',
-       date: '2024-06-25 10:30 AM'
-     },
-     {
-       title: 'Delivered',
-       description: 'Order delivered to destination',
-       completed: true,
-       icon: '/assets/Delivered.svg',
-       label: 'In Transit',
-       labelColor: 'bg-blue-100 text-blue-600',
-       date: '2024-06-27 08:00 AM'
-     },
-     {
-       title: 'Received',
-       description: 'Client confirmed receipt',
-       completed: true,
-       icon: '/assets/Received.svg',
-       label: 'Completed',
-       labelColor: 'bg-yellow-100 text-yellow-600',
-       date: '2024-06-27 10:30 AM'
-     },
-     {
-       title: 'Completed',
-       description: 'Client confirmed receipt',
-       completed: true,
-       icon: '/assets/Accepted.svg',
-       label: 'Completed',
-       labelColor: 'bg-yellow-100 text-yellow-600',
-       date: '2024-06-27 10:30 AM'
-     }
-   ]
- },
- {
-   id: 'TRK002',
-   evenlyoProtection: false,
-   trackingId: 'TRK002',
-   orderId: 'ORD-2024-002',
-   clientName: 'Sarah Johnson',
-   phone: '+1 (555) 987-6543',
-   dateTime: '2024-06-27',
-   time: '10:30',
-   buyer: {
-     name: 'Sarah Johnson',
-     avatar: '/assets/jaydeep.png'
-   },
-   seller: {
-     name: 'Event Planners',
-     avatar: '/assets/Vendor1.png'
-   },
-   itemList: 'Wedding Decorations, Flowers',
-   destination: '789 Wedding Venue, Romance City',
-   status: 'On the way',
-   statusColor: 'text-pink-600 bg-pink-50',
-   statusLabel: 'In Transit',
-   totalPrice: '$1,850.00',
-   progressNote: 'Items are currently being transported to the venue. Expected arrival in 2 hours.',
-   timeline: [
-     {
-       title: 'Request Sent',
-       description: 'Client sent order request',
-       completed: true,
-       icon: '/assets/Sent.svg',
-       label: 'Client',
-       labelColor: 'bg-pink-100 text-pink-600',
-       date: '2024-06-26 11:00 AM'
-     },
-     {
-       title: 'Order Accepted',
-       description: 'Vendor accepted the order',
-       completed: true,
-       icon: '/assets/Accepted.svg',
-       label: 'Confirmed',
-       labelColor: 'bg-orange-100 text-orange-600',
-       date: '2024-06-26 12:30 PM'
-     },
-     {
-       title: 'Picked Up',
-       description: 'Order picked up from location',
-       completed: true,
-       icon: '/assets/Pickup.svg',
-       label: 'Driver',
-       labelColor: 'bg-green-100 text-green-600',
-       date: '2024-06-27 07:00 AM'
-     },
-     {
-       title: 'Delivered',
-       description: 'Order delivered to destination',
-       completed: false,
-       icon: '/assets/Delivered.svg',
-       label: 'In Transit',
-       labelColor: 'bg-blue-100 text-blue-600',
-       date: '2024-06-27 09:00 AM'
-     },
-     {
-       title: 'Received',
-       description: 'Client confirmed receipt',
-       completed: false,
-       icon: '/assets/Received.svg',
-       label: 'Completed',
-       labelColor: 'bg-gray-100 text-gray-600',
-       date: 'Expected: 2024-06-27 12:00 PM'
-     }
-   ]
- },
- {
-   id: 'TRK003',
-   evenlyoProtection: true,
-   trackingId: 'TRK003',
-   orderId: 'ORD-2024-003',
-   clientName: 'Michael Brown',
-   phone: '+1 (555) 456-7890',
-   dateTime: '2024-06-26',
-   time: '14:20',
-   buyer: {
-     name: 'Michael Brown',
-     avatar: '/assets/jaydeep.png'
-   },
-   seller: {
-     name: 'Catering Co',
-     avatar: '/assets/Vendor1.png'
-   },
-   itemList: 'Catering Equipment, Tables',
-   destination: '321 Event Center, Downtown',
-   status: 'Received back',
-   statusColor: 'text-orange-600 bg-orange-50',
-   statusLabel: 'Returned',
-   totalPrice: '$1,200.00',
-   progressNote: 'Order has been returned due to customer request. Full refund processed.',
-   timeline: [
-     {
-       title: 'Request Sent',
-       description: 'Client sent order request',
-       completed: true,
-       icon: '/assets/Sent.svg',
-       label: 'Client',
-       labelColor: 'bg-pink-100 text-pink-600',
-       date: '2024-06-24 10:00 AM'
-     },
-     {
-       title: 'Order Accepted',
-       description: 'Vendor accepted the order',
-       completed: true,
-       icon: '/assets/Accepted.svg',
-       label: 'Confirmed',
-       labelColor: 'bg-orange-100 text-orange-600',
-       date: '2024-06-24 11:30 AM'
-     },
-     {
-       title: 'Picked Up',
-       description: 'Order picked up from location',
-       completed: true,
-       icon: '/assets/Pickup.svg',
-       label: 'Driver',
-       labelColor: 'bg-green-100 text-green-600',
-       date: '2024-06-25 09:00 AM'
-     },
-     {
-       title: 'Delivered',
-       description: 'Order delivered to destination',
-       completed: true,
-       icon: '/assets/Delivered.svg',
-       label: 'In Transit',
-       labelColor: 'bg-blue-100 text-blue-600',
-       date: '2024-06-25 14:00 PM'
-     },
-     {
-       title: 'Received',
-       description: 'Client confirmed receipt',
-       completed: true,
-       icon: '/assets/Received.svg',
-       label: 'Completed',
-       labelColor: 'bg-yellow-100 text-yellow-600',
-       date: '2024-06-26 14:20 PM'
-     }
-   ]
- },
- {
-   id: 'TRK004',
-   evenlyoProtection: false,
-   trackingId: 'TRK004',
-   orderId: 'ORD-2024-004',
-   clientName: 'Emily Davis',
-   phone: '+1 (555) 789-0123',
-   dateTime: '2024-06-25',
-   time: '16:45',
-   buyer: {
-     name: 'Emily Davis',
-     avatar: '/assets/jaydeep.png'
-   },
-   seller: {
-     name: 'Elite Events',
-     avatar: '/assets/Vendor1.png'
-   },
-   itemList: 'Lighting Equipment, Decorations',
-   destination: '654 Grand Ballroom, Luxury District',
-   status: 'Complete',
-   statusColor: 'text-green-600 bg-green-50',
-   statusLabel: 'Complete',
-   totalPrice: '$3,750.00',
-   progressNote: 'Order completed successfully. Customer feedback received and payment confirmed.',
-   timeline: [
-     {
-       title: 'Request Sent',
-       description: 'Client sent order request',
-       completed: true,
-       icon: '/assets/Sent.svg',
-       label: 'Client',
-       labelColor: 'bg-pink-100 text-pink-600',
-       date: '2024-06-23 09:30 AM'
-     },
-     {
-       title: 'Order Accepted',
-       description: 'Vendor accepted the order',
-       completed: true,
-       icon: '/assets/Accepted.svg',
-       label: 'Confirmed',
-       labelColor: 'bg-orange-100 text-orange-600',
-       date: '2024-06-23 10:00 AM'
-     },
-     {
-       title: 'Picked Up',
-       description: 'Order picked up from location',
-       completed: true,
-       icon: '/assets/Pickup.svg',
-       label: 'Driver',
-       labelColor: 'bg-green-100 text-green-600',
-       date: '2024-06-24 15:00 PM'
-     },
-     {
-       title: 'Delivered',
-       description: 'Order delivered to destination',
-       completed: true,
-       icon: '/assets/Delivered.svg',
-       label: 'In Transit',
-       labelColor: 'bg-blue-100 text-blue-600',
-       date: '2024-06-25 08:00 AM'
-     },
-     {
-       title: 'Received',
-       description: 'Client confirmed receipt',
-       completed: true,
-       icon: '/assets/Received.svg',
-       label: 'Completed',
-       labelColor: 'bg-yellow-100 text-yellow-600',
-       date: '2024-06-25 16:45 PM'
-     }
-   ]
- },
- {
-   id: 'TRK005',
-   evenlyoProtection: false,
-   trackingId: 'TRK005',
-   orderId: 'ORD-2024-005',
-   clientName: 'David Wilson',
-   phone: '+1 (555) 234-5678',
-   dateTime: '2024-06-24',
-   time: '11:15',
-   buyer: {
-     name: 'David Wilson',
-     avatar: '/assets/jaydeep.png'
-   },
-   seller: {
-     name: 'Party Perfect',
-     avatar: '/assets/Vendor1.png'
-   },
-   itemList: 'Sound System, Microphones',
-   destination: '987 Community Hall, Suburbs',
-   status: 'Rejected',
-   statusColor: 'text-red-600 bg-red-50',
-   statusLabel: 'Rejected',
-   totalPrice: '$890.00',
-   progressNote: 'Order was rejected by vendor due to unavailability of requested items during the specified time.',
-   timeline: [
-     {
-       title: 'Request Sent',
-       description: 'Client sent order request',
-       completed: true,
-       icon: '/assets/Sent.svg',
-       label: 'Client',
-       labelColor: 'bg-pink-100 text-pink-600',
-       date: '2024-06-23 14:00 PM'
-     },
-     {
-       title: 'Order Accepted',
-       description: 'Vendor accepted the order',
-       completed: false,
-       icon: '/assets/Accepted.svg',
-       label: 'Confirmed',
-       labelColor: 'bg-gray-100 text-gray-600',
-       date: 'Not completed'
-     }
-   ]
- },
- {
-   id: 'TRK006',
-   evenlyoProtection: true,
-   trackingId: 'TRK006',
-   orderId: 'ORD-2024-006',
-   clientName: 'Lisa Anderson',
-   phone: '+1 (555) 345-6789',
-   dateTime: '2024-06-26',
-   time: '09:30',
-   buyer: {
-     name: 'Lisa Anderson',
-     avatar: '/assets/jaydeep.png'
-   },
-   seller: {
-     name: 'Dream Weddings',
-     avatar: '/assets/Vendor1.png'
-   },
-   itemList: 'Wedding Arch, Flowers, Chairs',
-   destination: '123 Garden Venue, Countryside',
-   status: 'Claim',
-   statusColor: 'text-purple-600 bg-purple-50',
-   statusLabel: 'Claimed',
-   totalPrice: '$2,150.00',
-   progressNote: 'Customer has filed a claim regarding damaged items. Investigation in progress.',
-   timeline: [
-     {
-       title: 'Request Sent',
-       description: 'Client sent order request',
-       completed: true,
-       icon: '/assets/Sent.svg',
-       label: 'Client',
-       labelColor: 'bg-pink-100 text-pink-600',
-       date: '2024-06-24 08:00 AM'
-     },
-     {
-       title: 'Order Accepted',
-       description: 'Vendor accepted the order',
-       completed: true,
-       icon: '/assets/Accepted.svg',
-       label: 'Confirmed',
-       labelColor: 'bg-orange-100 text-orange-600',
-       date: '2024-06-24 09:30 AM'
-     },
-     {
-       title: 'Picked Up',
-       description: 'Order picked up from location',
-       completed: true,
-       icon: '/assets/Pickup.svg',
-       label: 'Driver',
-       labelColor: 'bg-green-100 text-green-600',
-       date: '2024-06-25 16:00 PM'
-     },
-     {
-       title: 'Delivered',
-       description: 'Order delivered to destination',
-       completed: true,
-       icon: '/assets/Delivered.svg',
-       label: 'In Transit',
-       labelColor: 'bg-blue-100 text-blue-600',
-       date: '2024-06-26 07:00 AM'
-     },
-     {
-       title: 'Received',
-       description: 'Client confirmed receipt',
-       completed: true,
-       icon: '/assets/Received.svg',
-       label: 'Completed',
-       labelColor: 'bg-yellow-100 text-yellow-600',
-       date: '2024-06-26 09:30 AM'
-     }
-   ]
- }
-];
+  // Mock data for booking items
+  const bookingData = [
+    {
+      id: 'TRK001',
+      evenlyoProtection: true,
+      trackingId: 'TRK001',
+      orderId: 'ORD-2024-001',
+      clientName: 'John Smith',
+      phone: '+1 (555) 123-4567',
+      dateTime: '2024-06-27',
+      time: '10:30',
+      buyer: {
+        name: 'John Smith',
+        avatar: '/assets/jaydeep.png'
+      },
+      seller: {
+        name: 'Tech Store',
+        avatar: '/assets/Vendor1.png'
+      },
+      itemList: 'DJ Equipment, Sound System',
+      destination: '456 Business Ave, Commerce City',
+      status: 'Delivered',
+      statusColor: 'text-yellow-600 bg-yellow-50',
+      statusLabel: 'Delivered',
+      totalPrice: '$2,450.00',
+      progressNote: 'Order delivered to destination',
+      timeline: [
+        {
+          title: 'Request Sent',
+          description: 'Client sent order request',
+          completed: true,
+          icon: '/assets/Sent.svg',
+          label: 'Client',
+          labelColor: 'bg-pink-100 text-pink-600',
+          date: '2024-06-25 09:00 AM'
+        },
+        {
+          title: 'Order Accepted',
+          description: 'Vendor accepted the order',
+          completed: true,
+          icon: '/assets/Accepted.svg',
+          label: 'Confirmed',
+          labelColor: 'bg-orange-100 text-orange-600',
+          date: '2024-06-25 09:00 AM'
+        },
+        {
+          title: 'Picked Up',
+          description: 'Order picked up from location',
+          completed: true,
+          icon: '/assets/Pickup.svg',
+          label: 'Driver',
+          labelColor: 'bg-green-100 text-green-600',
+          date: '2024-06-25 10:30 AM'
+        },
+        {
+          title: 'Delivered',
+          description: 'Order delivered to destination',
+          completed: true,
+          icon: '/assets/Delivered.svg',
+          label: 'In Transit',
+          labelColor: 'bg-blue-100 text-blue-600',
+          date: '2024-06-27 08:00 AM'
+        },
+        {
+          title: 'Received',
+          description: 'Client confirmed receipt',
+          completed: true,
+          icon: '/assets/Received.svg',
+          label: 'Completed',
+          labelColor: 'bg-yellow-100 text-yellow-600',
+          date: '2024-06-27 10:30 AM'
+        },
+        {
+          title: 'Completed',
+          description: 'Client confirmed receipt',
+          completed: true,
+          icon: '/assets/Accepted.svg',
+          label: 'Completed',
+          labelColor: 'bg-yellow-100 text-yellow-600',
+          date: '2024-06-27 10:30 AM'
+        }
+      ]
+    },
+    {
+      id: 'TRK002',
+      evenlyoProtection: false,
+      trackingId: 'TRK002',
+      orderId: 'ORD-2024-002',
+      clientName: 'Sarah Johnson',
+      phone: '+1 (555) 987-6543',
+      dateTime: '2024-06-27',
+      time: '10:30',
+      buyer: {
+        name: 'Sarah Johnson',
+        avatar: '/assets/jaydeep.png'
+      },
+      seller: {
+        name: 'Event Planners',
+        avatar: '/assets/Vendor1.png'
+      },
+      itemList: 'Wedding Decorations, Flowers',
+      destination: '789 Wedding Venue, Romance City',
+      status: 'On the way',
+      statusColor: 'text-pink-600 bg-pink-50',
+      statusLabel: 'In Transit',
+      totalPrice: '$1,850.00',
+      progressNote: 'Items are currently being transported to the venue. Expected arrival in 2 hours.',
+      timeline: [
+        {
+          title: 'Request Sent',
+          description: 'Client sent order request',
+          completed: true,
+          icon: '/assets/Sent.svg',
+          label: 'Client',
+          labelColor: 'bg-pink-100 text-pink-600',
+          date: '2024-06-26 11:00 AM'
+        },
+        {
+          title: 'Order Accepted',
+          description: 'Vendor accepted the order',
+          completed: true,
+          icon: '/assets/Accepted.svg',
+          label: 'Confirmed',
+          labelColor: 'bg-orange-100 text-orange-600',
+          date: '2024-06-26 12:30 PM'
+        },
+        {
+          title: 'Picked Up',
+          description: 'Order picked up from location',
+          completed: true,
+          icon: '/assets/Pickup.svg',
+          label: 'Driver',
+          labelColor: 'bg-green-100 text-green-600',
+          date: '2024-06-27 07:00 AM'
+        },
+        {
+          title: 'Delivered',
+          description: 'Order delivered to destination',
+          completed: false,
+          icon: '/assets/Delivered.svg',
+          label: 'In Transit',
+          labelColor: 'bg-blue-100 text-blue-600',
+          date: '2024-06-27 09:00 AM'
+        },
+        {
+          title: 'Received',
+          description: 'Client confirmed receipt',
+          completed: false,
+          icon: '/assets/Received.svg',
+          label: 'Completed',
+          labelColor: 'bg-gray-100 text-gray-600',
+          date: 'Expected: 2024-06-27 12:00 PM'
+        }
+      ]
+    },
+    {
+      id: 'TRK003',
+      evenlyoProtection: true,
+      trackingId: 'TRK003',
+      orderId: 'ORD-2024-003',
+      clientName: 'Michael Brown',
+      phone: '+1 (555) 456-7890',
+      dateTime: '2024-06-26',
+      time: '14:20',
+      buyer: {
+        name: 'Michael Brown',
+        avatar: '/assets/jaydeep.png'
+      },
+      seller: {
+        name: 'Catering Co',
+        avatar: '/assets/Vendor1.png'
+      },
+      itemList: 'Catering Equipment, Tables',
+      destination: '321 Event Center, Downtown',
+      status: 'Received back',
+      statusColor: 'text-orange-600 bg-orange-50',
+      statusLabel: 'Returned',
+      totalPrice: '$1,200.00',
+      progressNote: 'Order has been returned due to customer request. Full refund processed.',
+      timeline: [
+        {
+          title: 'Request Sent',
+          description: 'Client sent order request',
+          completed: true,
+          icon: '/assets/Sent.svg',
+          label: 'Client',
+          labelColor: 'bg-pink-100 text-pink-600',
+          date: '2024-06-24 10:00 AM'
+        },
+        {
+          title: 'Order Accepted',
+          description: 'Vendor accepted the order',
+          completed: true,
+          icon: '/assets/Accepted.svg',
+          label: 'Confirmed',
+          labelColor: 'bg-orange-100 text-orange-600',
+          date: '2024-06-24 11:30 AM'
+        },
+        {
+          title: 'Picked Up',
+          description: 'Order picked up from location',
+          completed: true,
+          icon: '/assets/Pickup.svg',
+          label: 'Driver',
+          labelColor: 'bg-green-100 text-green-600',
+          date: '2024-06-25 09:00 AM'
+        },
+        {
+          title: 'Delivered',
+          description: 'Order delivered to destination',
+          completed: true,
+          icon: '/assets/Delivered.svg',
+          label: 'In Transit',
+          labelColor: 'bg-blue-100 text-blue-600',
+          date: '2024-06-25 14:00 PM'
+        },
+        {
+          title: 'Received',
+          description: 'Client confirmed receipt',
+          completed: true,
+          icon: '/assets/Received.svg',
+          label: 'Completed',
+          labelColor: 'bg-yellow-100 text-yellow-600',
+          date: '2024-06-26 14:20 PM'
+        }
+      ]
+    },
+    {
+      id: 'TRK004',
+      evenlyoProtection: false,
+      trackingId: 'TRK004',
+      orderId: 'ORD-2024-004',
+      clientName: 'Emily Davis',
+      phone: '+1 (555) 789-0123',
+      dateTime: '2024-06-25',
+      time: '16:45',
+      buyer: {
+        name: 'Emily Davis',
+        avatar: '/assets/jaydeep.png'
+      },
+      seller: {
+        name: 'Elite Events',
+        avatar: '/assets/Vendor1.png'
+      },
+      itemList: 'Lighting Equipment, Decorations',
+      destination: '654 Grand Ballroom, Luxury District',
+      status: 'Complete',
+      statusColor: 'text-green-600 bg-green-50',
+      statusLabel: 'Complete',
+      totalPrice: '$3,750.00',
+      progressNote: 'Order completed successfully. Customer feedback received and payment confirmed.',
+      timeline: [
+        {
+          title: 'Request Sent',
+          description: 'Client sent order request',
+          completed: true,
+          icon: '/assets/Sent.svg',
+          label: 'Client',
+          labelColor: 'bg-pink-100 text-pink-600',
+          date: '2024-06-23 09:30 AM'
+        },
+        {
+          title: 'Order Accepted',
+          description: 'Vendor accepted the order',
+          completed: true,
+          icon: '/assets/Accepted.svg',
+          label: 'Confirmed',
+          labelColor: 'bg-orange-100 text-orange-600',
+          date: '2024-06-23 10:00 AM'
+        },
+        {
+          title: 'Picked Up',
+          description: 'Order picked up from location',
+          completed: true,
+          icon: '/assets/Pickup.svg',
+          label: 'Driver',
+          labelColor: 'bg-green-100 text-green-600',
+          date: '2024-06-24 15:00 PM'
+        },
+        {
+          title: 'Delivered',
+          description: 'Order delivered to destination',
+          completed: true,
+          icon: '/assets/Delivered.svg',
+          label: 'In Transit',
+          labelColor: 'bg-blue-100 text-blue-600',
+          date: '2024-06-25 08:00 AM'
+        },
+        {
+          title: 'Received',
+          description: 'Client confirmed receipt',
+          completed: true,
+          icon: '/assets/Received.svg',
+          label: 'Completed',
+          labelColor: 'bg-yellow-100 text-yellow-600',
+          date: '2024-06-25 16:45 PM'
+        }
+      ]
+    },
+    {
+      id: 'TRK005',
+      evenlyoProtection: false,
+      trackingId: 'TRK005',
+      orderId: 'ORD-2024-005',
+      clientName: 'David Wilson',
+      phone: '+1 (555) 234-5678',
+      dateTime: '2024-06-24',
+      time: '11:15',
+      buyer: {
+        name: 'David Wilson',
+        avatar: '/assets/jaydeep.png'
+      },
+      seller: {
+        name: 'Party Perfect',
+        avatar: '/assets/Vendor1.png'
+      },
+      itemList: 'Sound System, Microphones',
+      destination: '987 Community Hall, Suburbs',
+      status: 'Rejected',
+      statusColor: 'text-red-600 bg-red-50',
+      statusLabel: 'Rejected',
+      totalPrice: '$890.00',
+      progressNote: 'Order was rejected by vendor due to unavailability of requested items during the specified time.',
+      timeline: [
+        {
+          title: 'Request Sent',
+          description: 'Client sent order request',
+          completed: true,
+          icon: '/assets/Sent.svg',
+          label: 'Client',
+          labelColor: 'bg-pink-100 text-pink-600',
+          date: '2024-06-23 14:00 PM'
+        },
+        {
+          title: 'Order Accepted',
+          description: 'Vendor accepted the order',
+          completed: false,
+          icon: '/assets/Accepted.svg',
+          label: 'Confirmed',
+          labelColor: 'bg-gray-100 text-gray-600',
+          date: 'Not completed'
+        }
+      ]
+    },
+    {
+      id: 'TRK006',
+      evenlyoProtection: true,
+      trackingId: 'TRK006',
+      orderId: 'ORD-2024-006',
+      clientName: 'Lisa Anderson',
+      phone: '+1 (555) 345-6789',
+      dateTime: '2024-06-26',
+      time: '09:30',
+      buyer: {
+        name: 'Lisa Anderson',
+        avatar: '/assets/jaydeep.png'
+      },
+      seller: {
+        name: 'Dream Weddings',
+        avatar: '/assets/Vendor1.png'
+      },
+      itemList: 'Wedding Arch, Flowers, Chairs',
+      destination: '123 Garden Venue, Countryside',
+      status: 'Claim',
+      statusColor: 'text-purple-600 bg-purple-50',
+      statusLabel: 'Claimed',
+      totalPrice: '$2,150.00',
+      progressNote: 'Customer has filed a claim regarding damaged items. Investigation in progress.',
+      timeline: [
+        {
+          title: 'Request Sent',
+          description: 'Client sent order request',
+          completed: true,
+          icon: '/assets/Sent.svg',
+          label: 'Client',
+          labelColor: 'bg-pink-100 text-pink-600',
+          date: '2024-06-24 08:00 AM'
+        },
+        {
+          title: 'Order Accepted',
+          description: 'Vendor accepted the order',
+          completed: true,
+          icon: '/assets/Accepted.svg',
+          label: 'Confirmed',
+          labelColor: 'bg-orange-100 text-orange-600',
+          date: '2024-06-24 09:30 AM'
+        },
+        {
+          title: 'Picked Up',
+          description: 'Order picked up from location',
+          completed: true,
+          icon: '/assets/Pickup.svg',
+          label: 'Driver',
+          labelColor: 'bg-green-100 text-green-600',
+          date: '2024-06-25 16:00 PM'
+        },
+        {
+          title: 'Delivered',
+          description: 'Order delivered to destination',
+          completed: true,
+          icon: '/assets/Delivered.svg',
+          label: 'In Transit',
+          labelColor: 'bg-blue-100 text-blue-600',
+          date: '2024-06-26 07:00 AM'
+        },
+        {
+          title: 'Received',
+          description: 'Client confirmed receipt',
+          completed: true,
+          icon: '/assets/Received.svg',
+          label: 'Completed',
+          labelColor: 'bg-yellow-100 text-yellow-600',
+          date: '2024-06-26 09:30 AM'
+        }
+      ]
+    }
+  ];
+
+  // Mock data for sale items
+  const saleData = [
+    {
+      id: 'SLE001',
+      evenlyoProtection: true,
+      trackingId: 'SLE001',
+      orderId: 'ORD-2024-S001',
+      clientName: 'Alex Thompson',
+      phone: '+1 (555) 111-2222',
+      dateTime: '2024-06-27',
+      time: '14:30',
+      buyer: {
+        name: 'Alex Thompson',
+        avatar: '/assets/jaydeep.png'
+      },
+      seller: {
+        name: 'Elite Events',
+        avatar: '/assets/Vendor1.png'
+      },
+      itemList: 'Premium Sound System, LED Lights',
+      destination: '789 Corporate Center, Business District',
+      status: 'On the way',
+      statusColor: 'text-blue-600 bg-blue-50',
+      statusLabel: 'On the way',
+      totalPrice: '$3,200.00',
+      progressNote: 'Items are being delivered to the venue',
+      timeline: [
+        {
+          title: 'Sale Confirmed',
+          description: 'Sale order confirmed',
+          completed: true,
+          icon: '/assets/Sent.svg',
+          label: 'Confirmed',
+          labelColor: 'bg-green-100 text-green-600',
+          date: '2024-06-26 10:00 AM'
+        },
+        {
+          title: 'Processing',
+          description: 'Order being processed',
+          completed: true,
+          icon: '/assets/Accepted.svg',
+          label: 'Processing',
+          labelColor: 'bg-orange-100 text-orange-600',
+          date: '2024-06-26 11:30 AM'
+        },
+        {
+          title: 'Shipped',
+          description: 'Items shipped from warehouse',
+          completed: true,
+          icon: '/assets/Pickup.svg',
+          label: 'Shipped',
+          labelColor: 'bg-blue-100 text-blue-600',
+          date: '2024-06-27 09:00 AM'
+        },
+        {
+          title: 'Delivered',
+          description: 'Items delivered to destination',
+          completed: false,
+          icon: '/assets/Delivered.svg',
+          label: 'In Transit',
+          labelColor: 'bg-blue-100 text-blue-600',
+          date: 'Expected: 2024-06-27 16:00 PM'
+        }
+      ]
+    },
+    {
+      id: 'SLE002',
+      evenlyoProtection: false,
+      trackingId: 'SLE002',
+      orderId: 'ORD-2024-S002',
+      clientName: 'Maria Garcia',
+      phone: '+1 (555) 333-4444',
+      dateTime: '2024-06-25',
+      time: '11:15',
+      buyer: {
+        name: 'Maria Garcia',
+        avatar: '/assets/jaydeep.png'
+      },
+      seller: {
+        name: 'Party Perfect',
+        avatar: '/assets/Vendor1.png'
+      },
+      itemList: 'Decoration Package, Balloons',
+      destination: '456 Event Hall, City Center',
+      status: 'Complete',
+      statusColor: 'text-green-600 bg-green-50',
+      statusLabel: 'Complete',
+      totalPrice: '$1,850.00',
+      progressNote: 'Sale completed successfully. Customer satisfied.',
+      timeline: [
+        {
+          title: 'Sale Confirmed',
+          description: 'Sale order confirmed',
+          completed: true,
+          icon: '/assets/Sent.svg',
+          label: 'Confirmed',
+          labelColor: 'bg-green-100 text-green-600',
+          date: '2024-06-23 14:00 PM'
+        },
+        {
+          title: 'Processing',
+          description: 'Order being processed',
+          completed: true,
+          icon: '/assets/Accepted.svg',
+          label: 'Processing',
+          labelColor: 'bg-orange-100 text-orange-600',
+          date: '2024-06-23 15:30 PM'
+        },
+        {
+          title: 'Shipped',
+          description: 'Items shipped from warehouse',
+          completed: true,
+          icon: '/assets/Pickup.svg',
+          label: 'Shipped',
+          labelColor: 'bg-blue-100 text-blue-600',
+          date: '2024-06-24 10:00 AM'
+        },
+        {
+          title: 'Delivered',
+          description: 'Items delivered to destination',
+          completed: true,
+          icon: '/assets/Delivered.svg',
+          label: 'Delivered',
+          labelColor: 'bg-yellow-100 text-yellow-600',
+          date: '2024-06-25 11:15 AM'
+        }
+      ]
+    }
+  ];
+
+  // Get current data based on active tab
+  const getCurrentData = () => {
+    return activeTab === 'bookingItems' ? bookingData : saleData;
+  };
 
   const handleFilterChange = (filterType, value) => {
     setSelectedFilters(prev => {
@@ -544,12 +680,12 @@ const Tracking = () => {
         ...prev,
         [filterType]: value
       };
-      
+
       // Reset subcategory when main category changes
       if (filterType === 'mainCategory') {
         newFilters.subCategory = 'Sub Category';
       }
-      
+
       return newFilters;
     });
   };
@@ -586,15 +722,15 @@ const Tracking = () => {
   const isToday = (day) => {
     const today = new Date();
     return currentMonth.getFullYear() === today.getFullYear() &&
-           currentMonth.getMonth() === today.getMonth() &&
-           day === today.getDate();
+      currentMonth.getMonth() === today.getMonth() &&
+      day === today.getDate();
   };
 
   const isSelected = (day) => {
     if (!selectedDate) return false;
     return selectedDate.getFullYear() === currentMonth.getFullYear() &&
-           selectedDate.getMonth() === currentMonth.getMonth() &&
-           selectedDate.getDate() === day;
+      selectedDate.getMonth() === currentMonth.getMonth() &&
+      selectedDate.getDate() === day;
   };
 
   // Modal handlers
@@ -654,7 +790,7 @@ const Tracking = () => {
       <div className="flex-shrink-0">
         <DashboardHeader title="Tracking" subtitle="You can track, see status and download the invoice" />
       </div>
-      
+
       {/* Scrollable Main Content */}
       <div className="flex-1 overflow-y-auto">
         <main className="container-7xl py-10 px-8">
@@ -666,253 +802,275 @@ const Tracking = () => {
             </p>
           </div>
 
+          {/* Tabs */}
+          <div className="mb-6">
+            <div className="flex w-full bg-gray-100 rounded-2xl p-1">
+              <button
+                onClick={() => setActiveTab('bookingItems')}
+                className={`flex-1 py-3 px-6 text-sm font-semibold rounded-xl transition-all duration-200 ${activeTab === 'bookingItems'
+                  ? 'btn-primary-mobile'
+                  : 'text-gray-600 hover:text-gray-800'
+                  }`}
+              >
+                Booking Items
+              </button>
+              <button
+                onClick={() => setActiveTab('saleItems')}
+                className={`flex-1 py-3 px-6 text-sm font-semibold rounded-xl transition-all duration-200 ${activeTab === 'saleItems'
+                  ? 'btn-primary-mobile'
+                  : 'text-gray-600 hover:text-gray-800'
+                  }`}
+              >
+                Sale Items
+              </button>
+            </div>
+          </div>
+
           {/* Filters Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-              {/* Item Name/ID Search */}
-              <div className="lg:col-span-1">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Item Name / ID"
-                    value={selectedFilters.itemName}
-                    onChange={(e) => handleFilterChange('itemName', e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm"
-                  />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+            {/* Item Name/ID Search */}
+            <div className="lg:col-span-1">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
                 </div>
-              </div>
-
-              {/* Main Category */}
-              <div className="lg:col-span-1">
-                <div className="relative" ref={mainCategoryDropdownRef}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenMainCategoryDropdown(!openMainCategoryDropdown)}
-                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:ring-1 focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-left text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    {selectedFilters.mainCategory}
-                  </button>
-                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                  
-                  {openMainCategoryDropdown && (
-                    <div className="absolute right-0 mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-2">
-                      <button
-                        onClick={() => {
-                          handleFilterChange('mainCategory', 'Main Category');
-                          setOpenMainCategoryDropdown(false);
-                        }}
-                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50"
-                      >
-                        Main Category
-                      </button>
-                      {mainCategories.map((category) => (
-                        <button
-                          key={category}
-                          onClick={() => {
-                            handleFilterChange('mainCategory', category);
-                            setOpenMainCategoryDropdown(false);
-                          }}
-                          className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
-                        >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Sub Category */}
-              <div className="lg:col-span-1">
-                <div className="relative" ref={subCategoryDropdownRef}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (selectedFilters.mainCategory !== 'Main Category') {
-                        setOpenSubCategoryDropdown(!openSubCategoryDropdown);
-                      }
-                    }}
-                    className={`w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:ring-1 focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-left transition-colors ${
-                      selectedFilters.mainCategory === 'Main Category' 
-                        ? 'text-gray-400 cursor-not-allowed' 
-                        : 'text-gray-700 hover:bg-gray-50 cursor-pointer'
-                    }`}
-                    disabled={selectedFilters.mainCategory === 'Main Category'}
-                  >
-                    {selectedFilters.mainCategory === 'Main Category' 
-                      ? 'Select Main Category ' 
-                      : selectedFilters.subCategory
-                    }
-                  </button>
-                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                  
-                  {openSubCategoryDropdown && selectedFilters.mainCategory !== 'Main Category' && (
-                    <div className="absolute right-0 mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-2 max-h-60 overflow-y-auto scrollbar-hide">
-                      <button
-                        onClick={() => {
-                          handleFilterChange('subCategory', 'Sub Category');
-                          setOpenSubCategoryDropdown(false);
-                        }}
-                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50"
-                      >
-                        Sub Category
-                      </button>
-                      {getSubCategories().map((category) => (
-                        <button
-                          key={category}
-                          onClick={() => {
-                            handleFilterChange('subCategory', category);
-                            setOpenSubCategoryDropdown(false);
-                          }}
-                          className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
-                        >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* All Vendors */}
-              <div className="lg:col-span-1">
-                <div className="relative" ref={vendorDropdownRef}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenVendorDropdown(!openVendorDropdown)}
-                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:ring-1 focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-left text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    {selectedFilters.vendor}
-                  </button>
-                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                  
-                  {openVendorDropdown && (
-                    <div className="absolute right-0 mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-2 max-h-60 overflow-y-auto scrollbar-hide">
-                      <button
-                        onClick={() => {
-                          handleFilterChange('vendor', 'All Vendors');
-                          setOpenVendorDropdown(false);
-                        }}
-                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50"
-                      >
-                        All Vendors
-                      </button>
-                      {vendors.map((vendor) => (
-                        <button
-                          key={vendor}
-                          onClick={() => {
-                            handleFilterChange('vendor', vendor);
-                            setOpenVendorDropdown(false);
-                          }}
-                          className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
-                        >
-                          {vendor}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Filter by Date */}
-              <div className="lg:col-span-1">
-                <div className="relative" ref={calendarRef}>
-                  <button
-                    type="button"
-                    onClick={() => setShowCalendar(!showCalendar)}
-                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:ring-1 focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-left text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    {selectedDate ? selectedDate.toLocaleDateString('en-US') : 'Filter by date'}
-                  </button>
-                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  
-                  {showCalendar && (
-                    <div className="absolute right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 p-4 w-80">
-                      {/* Calendar Header */}
-                      <div className="flex items-center justify-between mb-4">
-                        <button
-                          onClick={() => navigateMonth(-1)}
-                          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                          </svg>
-                        </button>
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          {getMonthName(currentMonth)}
-                        </h3>
-                        <button
-                          onClick={() => navigateMonth(1)}
-                          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </button>
-                      </div>
-
-                      {/* Days of Week */}
-                      <div className="grid grid-cols-7 gap-1 mb-2">
-                        {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map((day) => (
-                          <div key={day} className="text-center text-xs font-medium text-black py-2">
-                            {day}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Calendar Grid */}
-                      <div className="grid grid-cols-7 gap-1">
-                        {/* Empty cells for days before month starts */}
-                        {Array.from({ length: (getFirstDayOfMonth(currentMonth) + 6) % 7 }, (_, i) => (
-                          <div key={`empty-${i}`} className="h-10" />
-                        ))}
-                        
-                        {/* Days of the month */}
-                        {Array.from({ length: getDaysInMonth(currentMonth) }, (_, i) => {
-                          const day = i + 1;
-                          return (
-                            <button
-                              key={day}
-                              onClick={() => handleDateSelect(day)}
-                              className={`h-10 text-sm font-medium rounded-lg transition-colors ${
-                                isSelected(day)
-                                  ? 'bg-pink-500 text-white'
-                                  : isToday(day)
-                                  ? 'bg-pink-50 text-pink-600'
-                                  : 'text-gray-700 hover:bg-gray-100'
-                              }`}
-                            >
-                              {day}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <input
+                  type="text"
+                  placeholder="Item Name / ID"
+                  value={selectedFilters.itemName}
+                  onChange={(e) => handleFilterChange('itemName', e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm"
+                />
               </div>
             </div>
-       
+
+            {/* Main Category */}
+            <div className="lg:col-span-1">
+              <div className="relative" ref={mainCategoryDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setOpenMainCategoryDropdown(!openMainCategoryDropdown)}
+                  className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:ring-1 focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-left text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  {selectedFilters.mainCategory}
+                </button>
+                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+
+                {openMainCategoryDropdown && (
+                  <div className="absolute right-0 mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-2">
+                    <button
+                      onClick={() => {
+                        handleFilterChange('mainCategory', 'Main Category');
+                        setOpenMainCategoryDropdown(false);
+                      }}
+                      className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50"
+                    >
+                      Main Category
+                    </button>
+                    {mainCategories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          handleFilterChange('mainCategory', category);
+                          setOpenMainCategoryDropdown(false);
+                        }}
+                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Sub Category */}
+            <div className="lg:col-span-1">
+              <div className="relative" ref={subCategoryDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (selectedFilters.mainCategory !== 'Main Category') {
+                      setOpenSubCategoryDropdown(!openSubCategoryDropdown);
+                    }
+                  }}
+                  className={`w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:ring-1 focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-left transition-colors ${selectedFilters.mainCategory === 'Main Category'
+                    ? 'text-gray-400 cursor-not-allowed'
+                    : 'text-gray-700 hover:bg-gray-50 cursor-pointer'
+                    }`}
+                  disabled={selectedFilters.mainCategory === 'Main Category'}
+                >
+                  {selectedFilters.mainCategory === 'Main Category'
+                    ? 'Select Main Category '
+                    : selectedFilters.subCategory
+                  }
+                </button>
+                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+
+                {openSubCategoryDropdown && selectedFilters.mainCategory !== 'Main Category' && (
+                  <div className="absolute right-0 mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-2 max-h-60 overflow-y-auto scrollbar-hide">
+                    <button
+                      onClick={() => {
+                        handleFilterChange('subCategory', 'Sub Category');
+                        setOpenSubCategoryDropdown(false);
+                      }}
+                      className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50"
+                    >
+                      Sub Category
+                    </button>
+                    {getSubCategories().map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          handleFilterChange('subCategory', category);
+                          setOpenSubCategoryDropdown(false);
+                        }}
+                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* All Vendors */}
+            <div className="lg:col-span-1">
+              <div className="relative" ref={vendorDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setOpenVendorDropdown(!openVendorDropdown)}
+                  className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:ring-1 focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-left text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  {selectedFilters.vendor}
+                </button>
+                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+
+                {openVendorDropdown && (
+                  <div className="absolute right-0 mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-2 max-h-60 overflow-y-auto scrollbar-hide">
+                    <button
+                      onClick={() => {
+                        handleFilterChange('vendor', 'All Vendors');
+                        setOpenVendorDropdown(false);
+                      }}
+                      className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50"
+                    >
+                      All Vendors
+                    </button>
+                    {vendors.map((vendor) => (
+                      <button
+                        key={vendor}
+                        onClick={() => {
+                          handleFilterChange('vendor', vendor);
+                          setOpenVendorDropdown(false);
+                        }}
+                        className="w-full text-left px-6 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                      >
+                        {vendor}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Filter by Date */}
+            <div className="lg:col-span-1">
+              <div className="relative" ref={calendarRef}>
+                <button
+                  type="button"
+                  onClick={() => setShowCalendar(!showCalendar)}
+                  className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-xl focus:ring-1 focus:ring-pink-500 focus:border-pink-500 text-sm bg-white text-left text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  {selectedDate ? selectedDate.toLocaleDateString('en-US') : 'Filter by date'}
+                </button>
+                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+
+                {showCalendar && (
+                  <div className="absolute right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 p-4 w-80">
+                    {/* Calendar Header */}
+                    <div className="flex items-center justify-between mb-4">
+                      <button
+                        onClick={() => navigateMonth(-1)}
+                        className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {getMonthName(currentMonth)}
+                      </h3>
+                      <button
+                        onClick={() => navigateMonth(1)}
+                        className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* Days of Week */}
+                    <div className="grid grid-cols-7 gap-1 mb-2">
+                      {['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'].map((day) => (
+                        <div key={day} className="text-center text-xs font-medium text-black py-2">
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Calendar Grid */}
+                    <div className="grid grid-cols-7 gap-1">
+                      {/* Empty cells for days before month starts */}
+                      {Array.from({ length: (getFirstDayOfMonth(currentMonth) + 6) % 7 }, (_, i) => (
+                        <div key={`empty-${i}`} className="h-10" />
+                      ))}
+
+                      {/* Days of the month */}
+                      {Array.from({ length: getDaysInMonth(currentMonth) }, (_, i) => {
+                        const day = i + 1;
+                        return (
+                          <button
+                            key={day}
+                            onClick={() => handleDateSelect(day)}
+                            className={`h-10 text-sm font-medium rounded-lg transition-colors ${isSelected(day)
+                              ? 'bg-pink-500 text-white'
+                              : isToday(day)
+                                ? 'bg-pink-50 text-pink-600'
+                                : 'text-gray-700 hover:bg-gray-100'
+                              }`}
+                          >
+                            {day}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
 
           {/* Tracking Table - Desktop Only */}
           <div className="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden hidden lg:block">
@@ -931,7 +1089,7 @@ const Tracking = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {trackingData.map((order) => (
+                  {getCurrentData().map((order) => (
                     <tr key={order.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-black">
                         {order.trackingId}
@@ -1000,7 +1158,7 @@ const Tracking = () => {
           {/* Mobile Card View - Only visible on mobile */}
           <div className="lg:hidden">
             <div className="divide-y divide-gray-100">
-              {trackingData.map((order) => (
+              {getCurrentData().map((order) => (
                 <div key={order.id} className="p-4 hover:bg-gray-50 transition-colors bg-white rounded-3xl shadow-sm mb-4">
                   {/* Card Header: Tracking ID, Status, Date */}
                   <div className="flex items-center justify-between mb-3">
@@ -1067,7 +1225,7 @@ const Tracking = () => {
       </div>
 
       {/* Modal Components */}
-      <BuyerDetailsModal 
+      <BuyerDetailsModal
         isOpen={showBuyerModal}
         onClose={closeBuyerModal}
         buyer={selectedBuyer}
@@ -1075,8 +1233,8 @@ const Tracking = () => {
         onTrackOrder={handleViewOrderClick}
         currentOrder={selectedOrder}
       />
-      
-      <SellerDetailsModal 
+
+      <SellerDetailsModal
         isOpen={showSellerModal}
         onClose={closeSellerModal}
         seller={selectedSeller}
@@ -1085,7 +1243,7 @@ const Tracking = () => {
         currentOrder={selectedOrder}
       />
 
-      <TrackOrderModal 
+      <TrackOrderModal
         open={showTrackOrderModal}
         onClose={closeTrackOrderModal}
         order={selectedOrder}

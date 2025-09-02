@@ -27,7 +27,7 @@ const StatsCards = () => {
       icon: '/assets/Cart.svg',
     },
     {
-      title: 'Complete Bookings',
+      title: 'Total Bookings',
       value: '8,945',
       change: '+12% from last month',
       bgColor: 'bg-white',
@@ -39,8 +39,8 @@ const StatsCards = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {stats.map((stat, index) => (
-        <div 
-          key={index} 
+        <div
+          key={index}
           className={`${stat.bgColor} ${stat.textColor} rounded-3xl p-6 shadow-sm border border-gray-100 relative overflow-hidden`}
         >
           {/* Content */}
@@ -49,19 +49,18 @@ const StatsCards = () => {
               <p className={`text-sm font-semibold ${stat.textColor === 'text-white' ? 'text-white/80' : 'text-black'}`}>
                 {stat.title}
               </p>
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center border border-gray-200 ${
-                stat.textColor === 'text-white' ? 'bg-white/20' : 'bg-white'
-              }`}>
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center border border-gray-200 ${stat.textColor === 'text-white' ? 'bg-white/20' : 'bg-white'
+                }`}>
                 <img src={stat.icon} alt="" className="w-5 h-5" />
               </div>
             </div>
-            
+
             <div className="mb-1">
               <h3 className={`text-3xl font-extrabold ${stat.textColor}`}>
                 {stat.value}
               </h3>
             </div>
-            
+
             <p className={`text-xs font-medium ${stat.textColor === 'text-white' ? 'text-white/70' : 'text-black'}`}>
               {stat.change}
             </p>

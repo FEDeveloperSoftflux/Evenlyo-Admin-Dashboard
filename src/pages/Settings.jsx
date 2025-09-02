@@ -182,7 +182,7 @@ const Settings = () => {
                   className="bg-gradient-brand text-white px-8 py-2 rounded-xl font-semibold shadow hover:opacity-90 transition-opacity"
                   type="button"
                 >
-                  Save Fee Details
+                  Save 
                 </button>
               </div>
             </div>

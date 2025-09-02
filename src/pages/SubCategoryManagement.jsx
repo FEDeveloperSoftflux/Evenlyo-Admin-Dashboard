@@ -464,9 +464,11 @@ const SubCategoryManagement = ({ categoryId, onBack }) => {
                         placeholder="%"
                       />
                     </div>
-                    <div className="text-xs text-gray-500 mb-2">
-                      Remaining {100 - Number(formData.upfrontPercentage) }% payment will be taken before the event. Client will receive a reminder to pay timely when event is 3 or More Days Away. If Event is Less Than 3 Days Away Full payment will be taken upfront from client while booking.
-                    </div>
+                    {formData.upfrontPercentage && (
+                      <div className="text-xs text-gray-500 mb-2">
+                        Remaining {100 - Number(formData.upfrontPercentage)}% payment will be taken before the event. Client will receive a reminder to pay timely when event is 3 or More Days Away. If Event is Less Than 3 Days Away Full payment will be taken upfront from client while booking.
+                      </div>
+                    )}
                   </div>
                 )}
                                 {/* Vendor Payout Rules */}

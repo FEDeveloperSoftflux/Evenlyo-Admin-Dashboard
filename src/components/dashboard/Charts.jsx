@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   LineChart,
   Line,
@@ -10,23 +11,16 @@ import {
 } from 'recharts';
 
 const Charts = ({ activeTab }) => {
-  // Sample data for booking and sales
-  const bookingData = [
-    { month: 'Jan', value: 310 },
-    { month: 'Feb', value: 250 },
-    { month: 'Mar', value: 350 },
-    { month: 'Apr', value: 450 },
-    { month: 'May', value: 400 },
-    { month: 'Jun', value: 500 },
-  ];
-  const salesData = [
-    { month: 'Jan', value: 210 },
-    { month: 'Feb', value: 180 },
-    { month: 'Mar', value: 320 },
-    { month: 'Apr', value: 390 },
-    { month: 'May', value: 420 },
-    { month: 'Jun', value: 600 },
-  ];
+  const { monthlyBookingData } = useSelector((state) => state.dashboard);
+  
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
+  const bookingData = monthlyBookingData.map(item => ({
+    month: monthNames[item.month - 1],
+    value: item.count
+  }));
+  
+  const salesData = bookingData; // Using same data for sales tab
   const chartData = activeTab === 'sales' ? salesData : bookingData;
 
   return (
@@ -37,7 +31,7 @@ const Charts = ({ activeTab }) => {
             {activeTab === 'sales' ? 'Yearly Sales Overview' : 'Yearly Bookings Overview'}
           </h3>
           <p className="text-sm text-gray-500">
-            {activeTab === 'sales' ? '$7000' : '$5000'}
+            {activeTab === 'sales' ? `$${bookingData.reduce((sum, item) => sum + item.value, 0) * 10}` : `$${bookingData.reduce((sum, item) => sum + item.value, 0) * 8}`}
           </p>
         </div>
       </div>

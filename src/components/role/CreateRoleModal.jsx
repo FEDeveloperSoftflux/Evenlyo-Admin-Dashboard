@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { showSuccess, showError } from '../../service/toastService';
 
 const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
@@ -76,14 +77,14 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
       const newRole = {
         id: Date.now(),
-        dateTime: new Date().toLocaleDateString('en-US', { 
-          month: 'numeric', 
-          day: 'numeric', 
-          year: 'numeric' 
+        dateTime: new Date().toLocaleDateString('en-US', {
+          month: 'numeric',
+          day: 'numeric',
+          year: 'numeric'
         }),
         name: formData.roleName,
         role: formData.designation,
@@ -96,7 +97,7 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
       };
 
       onSubmit(newRole);
-      
+
       // Reset form
       setFormData({
         roleName: '',
@@ -107,6 +108,7 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
       });
       setErrors({});
       onClose();
+      showSuccess('Role created successfully');
     }
   };
 
@@ -157,9 +159,8 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
                 value={formData.roleName}
                 onChange={handleChange}
                 placeholder="Enter role name"
-                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 ${
-                  errors.roleName ? 'border-red-500 bg-red-50' : 'border-gray-300'
-                }`}
+                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 ${errors.roleName ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                  }`}
               />
               {errors.roleName && (
                 <p className="text-red-500 text-sm mt-1">{errors.roleName}</p>
@@ -178,9 +179,8 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter email address"
-                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 ${
-                  errors.email ? 'border-red-500 bg-red-50' : 'border-gray-300'
-                }`}
+                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 ${errors.email ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                  }`}
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">{errors.email}</p>
@@ -199,9 +199,8 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
                 value={formData.contactNumber}
                 onChange={handleChange}
                 placeholder="Enter contact number"
-                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 ${
-                  errors.contactNumber ? 'border-red-500 bg-red-50' : 'border-gray-300'
-                }`}
+                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 ${errors.contactNumber ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                  }`}
               />
               {errors.contactNumber && (
                 <p className="text-red-500 text-sm mt-1">{errors.contactNumber}</p>
@@ -217,9 +216,8 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
                 <button
                   type="button"
                   onClick={() => setOpenDesignationDropdown(!openDesignationDropdown)}
-                  className={`w-full px-4 py-3 pr-10 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 bg-white text-left ${
-                    errors.designation ? 'border-red-500 bg-red-50' : 'border-gray-300'
-                  } ${formData.designation ? 'text-gray-900' : 'text-gray-500'} hover:bg-gray-50`}
+                  className={`w-full px-4 py-3 pr-10 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 bg-white text-left ${errors.designation ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                    } ${formData.designation ? 'text-gray-900' : 'text-gray-500'} hover:bg-gray-50`}
                 >
                   {formData.designation || 'Choose a designation'}
                 </button>
@@ -228,7 +226,7 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
-                
+
                 {openDesignationDropdown && (
                   <div className="absolute right-0 mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-2">
                     <button
@@ -291,9 +289,8 @@ const CreateRoleModal = ({ isOpen, onClose, onSubmit }) => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Set Password"
-                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 ${
-                  errors.password ? 'border-red-500 bg-red-50' : 'border-gray-300'
-                }`}
+                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 ${errors.password ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                  }`}
               />
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>

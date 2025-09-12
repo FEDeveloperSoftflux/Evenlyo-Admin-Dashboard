@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchDashboardStats } from '../store/slices/dashboardSlice';
 import DashboardHeader from '../components/common/DashboardHeader';
 import StatsCards from '../components/Dashboard/StatsCards';
 import RecentActivity from '../components/Dashboard/RecentActivity';
@@ -8,7 +10,13 @@ import RecentJoinClients from '../components/Dashboard/RecentJoinClients';
 import '../styles/design-system.css';
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.dashboard);
   const [activeTab, setActiveTab] = useState('booking');
+
+  useEffect(() => {
+    dispatch(fetchDashboardStats());
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col h-full">

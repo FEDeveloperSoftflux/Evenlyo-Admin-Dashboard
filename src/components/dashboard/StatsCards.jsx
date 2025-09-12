@@ -1,10 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const StatsCards = () => {
+  const { statsCard } = useSelector((state) => state.dashboard);
+  
   const stats = [
     {
       title: 'All Clients',
-      value: '2,847',
+      value: statsCard['All Client'] || 0,
       change: '+12% from last month',
       bgColor: 'bg-white',
       textColor: 'text-gray-900',
@@ -12,7 +15,7 @@ const StatsCards = () => {
     },
     {
       title: 'All Vendors',
-      value: '1,234',
+      value: statsCard['All Vendor'] || 0,
       change: '+12% from last month',
       bgColor: 'bg-gradient-brand',
       textColor: 'text-white',
@@ -20,7 +23,7 @@ const StatsCards = () => {
     },
     {
       title: 'Total Items',
-      value: '15,672',
+      value: statsCard['Total Items'] || 0,
       change: '+12% from last month',
       bgColor: 'bg-white',
       textColor: 'text-gray-900',
@@ -28,7 +31,7 @@ const StatsCards = () => {
     },
     {
       title: 'Total Bookings',
-      value: '8,945',
+      value: statsCard['Total Booking'] || 0,
       change: '+12% from last month',
       bgColor: 'bg-white',
       textColor: 'text-gray-900',
@@ -57,7 +60,7 @@ const StatsCards = () => {
 
             <div className="mb-1">
               <h3 className={`text-3xl font-extrabold ${stat.textColor}`}>
-                {stat.value}
+                {stat.value.toLocaleString()}
               </h3>
             </div>
 

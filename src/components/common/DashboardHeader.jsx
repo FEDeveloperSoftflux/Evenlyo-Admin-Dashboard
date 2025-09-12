@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAdmin } from '../../store/slices/authSlice';
 
-const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
+const DashboardHeader = ({ title = "Dashboard" }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileDropdownRef = useRef(null);
@@ -34,6 +36,21 @@ const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const handleSignOut = async () => {
+    try {
+      await dispatch(logoutAdmin());
+    } catch {
+      // ignore
+    }
+    window.location.reload();
+  };
+
+  const displayName = auth?.user?.name || auth?.user?.fullName || auth?.user?.email || 'Admin';
+  const displayEmail = auth?.user?.email || '';
 
   return (
     <header className="bg-gray-100 border-b border-gray-200 z-40">
@@ -85,7 +102,7 @@ const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
 
             {/* User Avatar with Dropdown */}
             <div className="relative" ref={profileDropdownRef}>
-              <button 
+              <button
                 onClick={toggleProfileDropdown}
                 className="flex items-center space-x-2 hover:bg-gray-50 rounded-lg p-2 transition-colors"
               >
@@ -93,8 +110,8 @@ const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
                   <img src="/assets/jaydeep.png" alt="Jaydeep" className="w-full h-full object-cover rounded-full" />
                 </div>
                 <div className="hidden sm:block text-left">
-                  <p className="text-sm font-medium text-gray-900">Jaydeep</p>
-                  <p className="text-xs text-gray-500">jaydeep@gmail.com</p>
+                  <p className="text-sm font-medium text-gray-900">{displayName}</p>
+                  <p className="text-xs text-gray-500">{displayEmail}</p>
                 </div>
                 <svg className="w-4 h-4 text-gray-500 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -112,8 +129,8 @@ const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
                           <img src="/assets/jaydeep.png" alt="Jaydeep" className="w-full h-full object-cover rounded-full" />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-900">Jaydeep</p>
-                          <p className="text-xs text-gray-500">jaydeep@gmail.com</p>
+                          <p className="text-sm font-medium text-gray-900">{displayName}</p>
+                          <p className="text-xs text-gray-500">{displayEmail}</p>
                         </div>
                       </div>
                     </div>
@@ -140,10 +157,7 @@ const DashboardHeader = ({ title = "Dashboard", subtitle }) => {
                       <button
                         type="button"
                         className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                        onClick={() => {
-                          localStorage.removeItem("adminLoggedIn");
-                          window.location.reload();
-                        }}
+                        onClick={handleSignOut}
                       >
                         <svg className="w-4 h-4 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

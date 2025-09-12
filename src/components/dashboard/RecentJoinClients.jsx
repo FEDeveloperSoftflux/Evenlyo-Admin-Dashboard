@@ -1,64 +1,29 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const RecentJoinClients = ({ activeTab }) => {
-  const bookingClients = [
-    {
-      id: 1,
-      name: 'Emma Thompson',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      plan: 'Premium Plan',
-      date: '11 Jun 2025',
-      avatar: 'ET'
-    },
-    {
-      id: 2,
-      name: 'Robert Chen',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      plan: 'Standard Plan',
-      date: '11 Jun 2025',
-      avatar: 'RC'
-    },
-    {
-      id: 3,
-      name: 'Lisa Garcia',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      plan: 'Premium Plan',
-      date: '11 Jun 2025',
-      avatar: 'LG'
-    }
-  ];
-  const salesClients = [
-    {
-      id: 1,
-      name: 'Michael Scott',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      plan: 'Sales Pro',
-      date: '10 Jun 2025',
-      avatar: 'MS'
-    },
-    {
-      id: 2,
-      name: 'Pam Beesly',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      plan: 'Sales Basic',
-      date: '09 Jun 2025',
-      avatar: 'PB'
-    },
-    {
-      id: 3,
-      name: 'Jim Halpert',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      plan: 'Sales Pro',
-      date: '08 Jun 2025',
-      avatar: 'JH'
-    }
-  ];
+  const { recentClients } = useSelector((state) => state.dashboard);
+  
+  const formatDate = (dateString) => {
+    if (!dateString) return 'No bookings';
+    return new Date(dateString).toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+  
+  const bookingClients = recentClients.map((client) => ({
+    id: client.id,
+    name: client.name,
+    type: 'Active',
+    typeColor: 'bg-green-100 text-green-800',
+    plan: client.lastBooking ? 'Premium Plan' : 'Basic Plan',
+    date: formatDate(client.lastBooking),
+    avatar: client.name.split(' ').map(n => n[0]).join('').substring(0, 2)
+  }));
+  
+  const salesClients = bookingClients;
   const clients = activeTab === 'sales' ? salesClients : bookingClients;
 
   return (
@@ -74,7 +39,7 @@ const RecentJoinClients = ({ activeTab }) => {
       </div>
 
       <div className="">
-        {clients.map((client, index) => (
+        {clients.slice(0, 3).map((client, index) => (
           <div key={client.id} className={`flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 p-3 sm:p-4 hover:bg-gray-50 transition-colors ${index !== clients.length - 1 ? 'border-b border-gray-200 mb-4 pb-4' : ''}`}>
             <div className="flex items-start space-x-4 sm:space-x-0">
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 sm:mt-1">

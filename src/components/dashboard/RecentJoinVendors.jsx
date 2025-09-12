@@ -1,64 +1,29 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const RecentJoinVendors = ({ activeTab }) => {
-  const bookingVendors = [
-    {
-      id: 1,
-      name: 'Digital Agency Pro',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      category: 'Marketing',
-      date: '11 Jun 2025',
-      avatar: 'DA'
-    },
-    {
-      id: 2,
-      name: 'Home Services Plus',
-      type: 'Pending',
-      typeColor: 'bg-yellow-100 text-yellow-800',
-      category: 'Maintenance',
-      date: '11 Jun 2025',
-      avatar: 'HS'
-    },
-    {
-      id: 3,
-      name: 'Event Masters',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      category: 'Events',
-      date: '11 Jun 2025',
-      avatar: 'EM'
-    }
-  ];
-  const salesVendors = [
-    {
-      id: 1,
-      name: 'Sales Pro Inc.',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      category: 'Retail',
-      date: '10 Jun 2025',
-      avatar: 'SP'
-    },
-    {
-      id: 2,
-      name: 'Wholesale Mart',
-      type: 'Pending',
-      typeColor: 'bg-yellow-100 text-yellow-800',
-      category: 'Wholesale',
-      date: '09 Jun 2025',
-      avatar: 'WM'
-    },
-    {
-      id: 3,
-      name: 'Quick Supplies',
-      type: 'Active',
-      typeColor: 'bg-green-100 text-green-800',
-      category: 'Supplies',
-      date: '08 Jun 2025',
-      avatar: 'QS'
-    }
-  ];
+  const { recentVendors } = useSelector((state) => state.dashboard);
+  
+  const formatDate = (dateString) => {
+    if (!dateString) return 'No bookings';
+    return new Date(dateString).toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+  
+  const bookingVendors = recentVendors.map((vendor) => ({
+    id: vendor.id,
+    name: vendor.name,
+    type: 'Active',
+    typeColor: 'bg-green-100 text-green-800',
+    category: 'Services',
+    date: formatDate(vendor.lastBooking),
+    avatar: vendor.name.split(' ').map(n => n[0]).join('').substring(0, 2)
+  }));
+  
+  const salesVendors = bookingVendors;
   const vendors = activeTab === 'sales' ? salesVendors : bookingVendors;
 
   return (
@@ -74,7 +39,7 @@ const RecentJoinVendors = ({ activeTab }) => {
       </div>
 
       <div className="">
-        {vendors.map((vendor, index) => (
+        {vendors.slice(0, 3).map((vendor, index) => (
           <div key={vendor.id} className={`flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 p-3 sm:p-4 hover:bg-gray-50 transition-colors ${index !== vendors.length - 1 ? 'border-b border-gray-200 mb-4 pb-4' : ''}`}>
             <div className="flex items-start space-x-4 sm:space-x-0">
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 sm:mt-1">

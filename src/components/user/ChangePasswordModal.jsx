@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { showSuccess, showError } from '../../service/toastService';
 
 const ChangePasswordModal = ({ isOpen, onClose, userData, userType = 'vendor', onSave }) => {
   const [formData, setFormData] = useState({
@@ -29,19 +30,19 @@ const ChangePasswordModal = ({ isOpen, onClose, userData, userType = 'vendor', o
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.newPassword) {
       newErrors.newPassword = 'New password is required';
     } else if (formData.newPassword.length < 8) {
       newErrors.newPassword = 'Password must be at least 8 characters';
     }
-    
+
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.newPassword !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -78,8 +79,10 @@ const ChangePasswordModal = ({ isOpen, onClose, userData, userType = 'vendor', o
           </button>
         </div>
 
+        showSuccess('Password changed successfully');
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4 mb-8">
+            showError('Please fix the highlighted errors');
             {/* New Password */}
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">
@@ -90,9 +93,8 @@ const ChangePasswordModal = ({ isOpen, onClose, userData, userType = 'vendor', o
                 value={formData.newPassword}
                 onChange={(e) => handleInputChange('newPassword', e.target.value)}
                 placeholder="Enter Your Password"
-                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm ${
-                  errors.newPassword ? 'border-red-500' : 'border-gray-200'
-                }`}
+                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm ${errors.newPassword ? 'border-red-500' : 'border-gray-200'
+                  }`}
               />
               {errors.newPassword && (
                 <p className="text-red-500 text-xs mt-1">{errors.newPassword}</p>
@@ -109,16 +111,15 @@ const ChangePasswordModal = ({ isOpen, onClose, userData, userType = 'vendor', o
                 value={formData.confirmPassword}
                 onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                 placeholder="Enter Your Re-Password"
-                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm ${
-                  errors.confirmPassword ? 'border-red-500' : 'border-gray-200'
-                }`}
+                className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm ${errors.confirmPassword ? 'border-red-500' : 'border-gray-200'
+                  }`}
               />
               {errors.confirmPassword && (
                 <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
               )}
             </div>
           </div>
-          
+
           {/* Action Buttons */}
           <div className="flex gap-3">
             <button

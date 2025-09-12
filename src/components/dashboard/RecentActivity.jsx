@@ -1,70 +1,38 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const RecentActivity = ({ activeTab }) => {
-  const bookings = [
-    {
-      id: 1,
-      name: 'John Doe',
-      status: 'Completed',
-      statusColor: 'bg-green-100 text-green-800',
-      details: 'Office Chair from ABC Supplies',
-      date: '11 Jun 2025',
-      avatar: 'JD',
-      action: 'Track'
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      status: 'In progress',
-      statusColor: 'bg-yellow-100 text-yellow-800',
-      details: 'Laptop Stand from Tech Solutions',
-      date: '11 Jun 2025',
-      avatar: 'JS',
-      action: 'Track'
-    },
-    {
-      id: 3,
-      name: 'Bob Johnson',
-      status: 'Pending',
-      statusColor: 'bg-blue-100 text-blue-800',
-      details: 'Table Lamp from Home Decor',
-      date: '11 Jun 2025',
-      avatar: 'BJ',
-      action: 'Track'
+  const { recentBookings } = useSelector((state) => state.dashboard);
+  
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'completed': return 'bg-green-100 text-green-800';
+      case 'on_the_way': return 'bg-yellow-100 text-yellow-800';
+      case 'received': return 'bg-blue-100 text-blue-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
-  ];
-  const sales = [
-    {
-      id: 1,
-      name: 'Alice Brown',
-      status: 'Delivered',
-      statusColor: 'bg-green-100 text-green-800',
-      details: 'Sold: Desk Lamp',
-      date: '10 Jun 2025',
-      avatar: 'AB',
-      action: 'Invoice'
-    },
-    {
-      id: 2,
-      name: 'David Lee',
-      status: 'Processing',
-      statusColor: 'bg-yellow-100 text-yellow-800',
-      details: 'Sold: Office Desk',
-      date: '09 Jun 2025',
-      avatar: 'DL',
-      action: 'Invoice'
-    },
-    {
-      id: 3,
-      name: 'Sophia Turner',
-      status: 'Pending',
-      statusColor: 'bg-blue-100 text-blue-800',
-      details: 'Sold: Chair',
-      date: '08 Jun 2025',
-      avatar: 'ST',
-      action: 'Invoice'
-    }
-  ];
+  };
+  
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+  
+  const bookings = recentBookings.map((booking, index) => ({
+    id: index + 1,
+    name: booking.clientName,
+    status: booking.status.replace('_', ' '),
+    statusColor: getStatusColor(booking.status),
+    details: `Tracking ID: ${booking.trackingId}`,
+    date: formatDate(booking.createdAt),
+    avatar: booking.clientName.split(' ').map(n => n[0]).join('').substring(0, 2),
+    action: 'Track'
+  }));
+  
+  const sales = bookings; // Using same data for sales tab
   const data = activeTab === 'sales' ? sales : bookings;
 
   return (
@@ -80,7 +48,7 @@ const RecentActivity = ({ activeTab }) => {
       </div>
 
       <div className="">
-        {data.map((item, index) => (
+        {data.slice(0, 3).map((item, index) => (
           <div key={item.id} className={`flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 p-3 sm:p-4 hover:bg-gray-50 transition-colors ${index !== data.length - 1 ? 'border-b border-gray-200 mb-4 pb-4' : ''}`}>
             <div className="flex items-start space-x-4 sm:space-x-0">
               <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 sm:mt-1">
